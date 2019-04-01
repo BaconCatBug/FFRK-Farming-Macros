@@ -111,7 +111,7 @@ loop{
 		break Loop5
 		}
 		sleep 1
-		} until count > 15
+		} until count > 10
 		sleep 750
 		
 	MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
@@ -127,7 +127,7 @@ loop{
 		break Loop6
 		}
 		sleep 1
-		} until count > 15
+		} until count > 10
 		sleep 750
 		
 	MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
@@ -143,7 +143,23 @@ loop{
 		break Loop7
 		}
 		sleep 1
-		} until count > 15
+		} until count > 10
+		sleep 750
+	MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
+	
+	count = 0
+	Loop8:
+	loop{
+		;tooltip, 8
+		count++
+		PixelSearch, XX, YY, %Loop4Plus_Pixel_X%-1, %Loop4Plus_Pixel_Y%-1, %Loop4Plus_Pixel_X%+1, %Loop4Plus_Pixel_Y%+1, %Loop4Plus_Pixel_C%, 2, Fast, RGB
+		if (XX !=""){
+		sleep 500
+		MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
+		break Loop8
+		}
+		sleep 1
+		} until count > 10
 		sleep 750
 	MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
 }
