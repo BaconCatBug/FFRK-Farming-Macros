@@ -88,7 +88,7 @@ loop{
 	LoopB:
 	loop{
 		PixelSearch, ZZ, YY, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 0x000000, 0, Fast, RGB
-		tooltip, %ZZ%
+		;tooltip, %ZZ%
 		if (ZZ !=""){
 		break LoopB
 		}
