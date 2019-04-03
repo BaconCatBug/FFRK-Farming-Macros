@@ -17,7 +17,7 @@ Loop1_Pixel_C = 0xF9EC5C
 ;This will search a 2x2 square, with top left corner on the provided values.
 Loop2_Pixel_X = 1757
 Loop2_Pixel_Y = 646
-Loop2_Pixel_C = 0x1978ED
+Loop2_Pixel_C = 0x1A73ED 
 
 ;The same Pixel but the orange of the spend gems dialog, to exit the macro when you're out of stamina.
 ;The macro should work without you changing this thanks to variation matching but it's worth double checking.
@@ -43,7 +43,7 @@ loop{
 		;tooltip, 1
 		PixelSearch, XX, YY, %Loop1_Pixel_X%-3, %Loop1_Pixel_Y%-3, %Loop1_Pixel_X%+2, %Loop1_Pixel_Y%+2, %Loop1_Pixel_C%, 1, Fast, RGB
 		if (XX !=""){
-		sleep 150
+		sleep 250
 		MouseClick, Left, %Loop1_Pixel_X%, %Loop1_Pixel_Y%, 1, 0
 		break Loop1
 		}
@@ -84,6 +84,7 @@ loop{
 		}
 		sleep 250
 
+	;count = 0
 	LoopB:
 	loop{
 		PixelSearch, ZZ, YY, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 0x000000, 0, Fast, RGB
@@ -96,14 +97,16 @@ loop{
 			;tooltip, 4
 			PixelSearch, XX, YY, %Loop4Plus_Pixel_X%-1, %Loop4Plus_Pixel_Y%-1, %Loop4Plus_Pixel_X%+1, %Loop4Plus_Pixel_Y%+1, %Loop4Plus_Pixel_C%, 2, Fast, RGB
 			if (XX !=""){
-			sleep 250
+			;sleep 50
 			MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
+			count++
+			;tooltip, %count%
 			break Loop4
 			}
 			sleep 1
 			}
 		}
-		sleep 250
+		sleep 100
 }
 
 ^Space::exitapp
