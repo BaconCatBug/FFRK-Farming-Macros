@@ -6,12 +6,12 @@ CoordMode, Mouse, Screen
 ;if not A_IsAdmin
 	;Run *RunAs "%A_ScriptFullPath%"
 	
-;A Yellow Pixel on the "Champion" image of Fabul Castle - 1st Battle.
-;This will search a 5x5 square centered on the given pixel for the given colour.
+;A Pixel on the "Champion" image of Fabul Castle - 1st Battle.
+;This will search a 3x3 square centered on the given pixel for the given colour.
 ;All colours in this section should be of the format 0xRRGGBB
-Loop1_Pixel_X = 1475
-Loop1_Pixel_Y = 651
-Loop1_Pixel_C = 0xF9EC5C
+Loop1_Pixel_X = 1504
+Loop1_Pixel_Y = 718
+Loop1_Pixel_C = 0x92A2B4
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
 ;This will search a 2x2 square, with top left corner on the provided values.
@@ -42,8 +42,9 @@ loop{
 	loop{
 		;tooltip, 1
 		PixelSearch, XX, YY, %Loop1_Pixel_X%-3, %Loop1_Pixel_Y%-3, %Loop1_Pixel_X%+2, %Loop1_Pixel_Y%+2, %Loop1_Pixel_C%, 1, Fast, RGB
+		;tooltip, %XX% %YY%
 		if (XX !=""){
-		sleep 250
+		sleep 350
 		MouseClick, Left, %Loop1_Pixel_X%, %Loop1_Pixel_Y%, 1, 0
 		break Loop1
 		}
@@ -106,7 +107,7 @@ loop{
 			sleep 1
 			}
 		}
-		sleep 100
+		sleep 750
 }
 
 ^Space::exitapp
