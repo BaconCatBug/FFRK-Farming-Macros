@@ -41,7 +41,7 @@ loop{
 	Loop1:
 	loop{
 		;tooltip, 1
-		PixelSearch, XX, YY, %Loop1_Pixel_X%-3, %Loop1_Pixel_Y%-3, %Loop1_Pixel_X%+2, %Loop1_Pixel_Y%+2, %Loop1_Pixel_C%, 1, Fast, RGB
+		PixelSearch, XX, YY, %Loop1_Pixel_X%-1, %Loop1_Pixel_Y%-1, %Loop1_Pixel_X%+1, %Loop1_Pixel_Y%+1, %Loop1_Pixel_C%, 1, Fast, RGB
 		;tooltip, %XX% %YY%
 		if (XX !=""){
 		sleep 350
