@@ -44,7 +44,7 @@ loop{
 		PixelSearch, XX, YY, %Loop1_Pixel_X%-1, %Loop1_Pixel_Y%-1, %Loop1_Pixel_X%+1, %Loop1_Pixel_Y%+1, %Loop1_Pixel_C%, 1, Fast, RGB
 		;tooltip, %XX% %YY%
 		if (XX !=""){
-		sleep 350
+		sleep 500
 		MouseClick, Left, %Loop1_Pixel_X%, %Loop1_Pixel_Y%, 1, 0
 		break Loop1
 		}
