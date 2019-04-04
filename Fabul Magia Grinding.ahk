@@ -86,7 +86,7 @@ loop{
 		}
 		sleep 250
 
-	;count = 0
+	count = 0
 	LoopB:
 	loop{
 		PixelSearch, ZZ, YY, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 0x000000, 0, Fast, RGB
@@ -94,6 +94,7 @@ loop{
 		if (ZZ !=""){
 		break LoopB
 		}
+		count = 0
 		Loop4:
 		loop{
 			;tooltip, 4
@@ -102,11 +103,14 @@ loop{
 			;sleep 50
 			MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
 			count++
-			;tooltip, count
+			;tooltip, %count%
 			break Loop4
 			}
 			sleep 1
-			}
+			} until count >10 
 		}
+		;tooltip, Jobs Done
 		sleep 750
 }
+
+^Space::exitapp
