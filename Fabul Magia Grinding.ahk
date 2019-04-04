@@ -6,12 +6,13 @@ CoordMode, Mouse, Screen
 ;if not A_IsAdmin
 	;Run *RunAs "%A_ScriptFullPath%"
 	
-;A Pixel on the "Champion" image of Fabul Castle - 1st Battle.
+;A Yellow Pixel on the "Champion" image of Fabul Castle - 1st Battle.
 ;This will search a 3x3 square centered on the given pixel for the given colour.
 ;All colours in this section should be of the format 0xRRGGBB
-Loop1_Pixel_X = 1504
-Loop1_Pixel_Y = 718
-Loop1_Pixel_C = 0x92A2B4
+Loop1_Pixel_X = 1476
+Loop1_Pixel_Y = 649
+Loop1_Pixel_C = 0xF9ED5D
+
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
 ;This will search a 2x2 square, with top left corner on the provided values.
@@ -41,11 +42,11 @@ loop{
 	Loop1:
 	loop{
 		;tooltip, 1
-		PixelSearch, XX, YY, %Loop1_Pixel_X%-1, %Loop1_Pixel_Y%-1, %Loop1_Pixel_X%+1, %Loop1_Pixel_Y%+1, %Loop1_Pixel_C%, 1, Fast, RGB
-		;tooltip, %XX% %YY%
+		PixelSearch, XX, YY, Loop1_Pixel_X-1, Loop1_Pixel_Y-1, Loop1_Pixel_X+1, Loop1_Pixel_Y+1, %Loop1_Pixel_C%, 1, Fast, RGB
+		
 		if (XX !=""){
-		sleep 500
-		MouseClick, Left, %Loop1_Pixel_X%, %Loop1_Pixel_Y%, 1, 0
+		sleep 250
+		MouseClick, Left, Loop1_Pixel_X, Loop1_Pixel_Y, 1, 0
 		break Loop1
 		}
 		sleep 1
@@ -55,17 +56,17 @@ loop{
 	Loop2:
 	loop{
 		;tooltip, 2
-		PixelSearch, ZZ, YY, %Loop2_Pixel_X%, %Loop2_Pixel_Y%, %Loop2_Pixel_X%+1, %Loop2_Pixel_Y%+1, %Loop2_Pixel_O%, 5, Fast, RGB
+		PixelSearch, ZZ, YY, Loop2_Pixel_X, Loop2_Pixel_Y, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_O, 5, Fast, RGB
 		if (ZZ !=""){
 		SoundBeep, 523, 250
 		SoundBeep, 523, 250
 		exitapp
 		}
 		
-		PixelSearch, XX, YY, %Loop2_Pixel_X%, %Loop2_Pixel_Y%, %Loop2_Pixel_X%+1, %Loop2_Pixel_Y%+1, %Loop2_Pixel_C%, 2, Fast, RGB
+		PixelSearch, XX, YY, Loop2_Pixel_X, Loop2_Pixel_Y, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_C, 2, Fast, RGB
 		if (XX !=""){
 		sleep 150
-		MouseClick, Left, %Loop2_Pixel_X%, %Loop2_Pixel_Y%, 1, 0
+		MouseClick, Left, Loop2_Pixel_X, Loop2_Pixel_Y, 1, 0
 		break Loop2
 		}
 		sleep 1
@@ -75,10 +76,10 @@ loop{
 	Loop3:
 	loop{
 		;tooltip, 3
-		PixelSearch, XX, YY, %Loop3_Pixel_X%, %Loop3_Pixel_Y%, %Loop3_Pixel_X%, %Loop3_Pixel_Y%, %Loop3_Pixel_C%, 2, Fast, RGB
+		PixelSearch, XX, YY, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_C, 2, Fast, RGB
 		if (XX !=""){
 		sleep 250
-		MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
+		MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
 		break Loop3
 		}
 		sleep 1
@@ -88,20 +89,20 @@ loop{
 	;count = 0
 	LoopB:
 	loop{
-		PixelSearch, ZZ, YY, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 0x000000, 0, Fast, RGB
-		;tooltip, %ZZ%
+		PixelSearch, ZZ, YY, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 0x000000, 0, Fast, RGB
+		;tooltip, ZZ
 		if (ZZ !=""){
 		break LoopB
 		}
 		Loop4:
 		loop{
 			;tooltip, 4
-			PixelSearch, XX, YY, %Loop4Plus_Pixel_X%-1, %Loop4Plus_Pixel_Y%-1, %Loop4Plus_Pixel_X%+1, %Loop4Plus_Pixel_Y%+1, %Loop4Plus_Pixel_C%, 2, Fast, RGB
+			PixelSearch, XX, YY, Loop4Plus_Pixel_X-1, Loop4Plus_Pixel_Y-1, Loop4Plus_Pixel_X+1, Loop4Plus_Pixel_Y+1, Loop4Plus_Pixel_C, 2, Fast, RGB
 			if (XX !=""){
 			;sleep 50
-			MouseClick, Left, %Loop4Plus_Pixel_X%, %Loop4Plus_Pixel_Y%, 1, 0
+			MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
 			count++
-			;tooltip, %count%
+			;tooltip, count
 			break Loop4
 			}
 			sleep 1
@@ -109,5 +110,3 @@ loop{
 		}
 		sleep 750
 }
-
-^Space::exitapp
