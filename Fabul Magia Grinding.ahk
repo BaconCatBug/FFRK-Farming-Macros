@@ -86,9 +86,10 @@ loop{
 		}
 		sleep 250
 
-	count = 0
+	count2 = 0
 	LoopB:
 	loop{
+		
 		PixelSearch, ZZ, YY, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 0x000000, 0, Fast, RGB
 		;tooltip, ZZ
 		if (ZZ !=""){
@@ -99,16 +100,18 @@ loop{
 		loop{
 			;tooltip, 4
 			PixelSearch, XX, YY, Loop4Plus_Pixel_X-1, Loop4Plus_Pixel_Y-1, Loop4Plus_Pixel_X+1, Loop4Plus_Pixel_Y+1, Loop4Plus_Pixel_C, 2, Fast, RGB
-			if (XX !=""){
-			;sleep 50
-			MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
 			count++
+			if (XX !=""){
+			MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
+			sleep 100
 			;tooltip, %count%
 			break Loop4
 			}
 			sleep 1
+			count2++
 			} until count >10 
-		}
+		;tooltip, %count2%
+		} until count2 > 100
 		;tooltip, Jobs Done
 		sleep 750
 }
