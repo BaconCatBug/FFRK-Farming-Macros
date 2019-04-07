@@ -10,7 +10,7 @@ CoordMode, Mouse, Screen
 	;Run *RunAs "%A_ScriptFullPath%"
 
 
-;A Yellow Pixel on the "Champion" image of Fabul Castle - 1st Battle.
+;A Yellow Pixel on the yellow crossed swords of Fabul Castle - 1st Battle.
 ;This will search a 3x3 square centered on the given pixel for the given colour.
 ;All colours in this section should be of the format 0xRRGGBB
 Loop1_Pixel_X := 1476
