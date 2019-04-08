@@ -49,10 +49,11 @@ Loop4Plus_Pixel_C := 0xFFFFFF
 ;Crash Handling
 ;This will enable the macro to recover for when (yes, when) FFRK crashes.
 ;It can handle either the infinite black loading screen or a total crash to home screen.
-;This only works for emulators with a tab-like switcher at the top of the screen, like MuMu.
+;This only works for emulators with a tab-like switcher at the top of the screen, like MuMu or MeMu.
 ;However, since this relies on exact positioning, the emulator needs to be at the same position each time.
 ;Please visit https://redd.it/b9xn3z for instructions on how to force MuMu into the same position each time.
 Enable_Crash_Handle := 0
+
 ;The position of the X that closes the current tab (this is for the infinite black loading screen crash)
 Crash_Close_Pixel_X := 1555
 Crash_Close_Pixel_Y := 17
