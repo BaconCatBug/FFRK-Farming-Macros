@@ -57,6 +57,8 @@ Enable_Crash_Handle := 0
 Crash_Close_Pixel_X := 1555
 Crash_Close_Pixel_Y := 17
 ;The position of the FFRK launcher icon. This searches for a white pixel so put the coordinates somewhere in the middle.
+;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
+;As such please use the position of the app on the default launcher.
 Crash_App_Launch_X := 1831
 Crash_App_Launch_Y := 163
 ;The position and colour of the blue "Play" button when FFRK launches.
