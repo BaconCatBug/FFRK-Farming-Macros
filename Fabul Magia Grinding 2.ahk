@@ -13,16 +13,15 @@ CoordMode, Mouse, Screen
 ;A Yellow Pixel on the yellow crossed swords of Fabul Castle - 1st Battle.
 ;This will search a 3x3 square centered on the given pixel for the given colour.
 ;All colours in this section should be of the format 0xRRGGBB
-Loop1_Pixel_X := 1476
-Loop1_Pixel_Y := 649
+Loop1_Pixel_X := 1443
+Loop1_Pixel_Y := 637
 Loop1_Pixel_C := 0xF9ED5D
-
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
 ;This will search a 2x2 square, with top left corner on the provided values.
-Loop2_Pixel_X := 1757
-Loop2_Pixel_Y := 646
-Loop2_Pixel_C := 0x1A73ED 
+Loop2_Pixel_X := 1725
+Loop2_Pixel_Y := 635
+Loop2_Pixel_C := 0x1C60EB
 
 ;The same Pixel but the orange of the spend gems dialog, to enter slow mode when out of stamina.
 ;The macro should work without you changing this thanks to variation matching but it's worth double checking.
@@ -31,19 +30,19 @@ Loop2_Pixel_O := 0xE26B20
 
 ;The position of the "Back" button when you've run out of stamina.
 ;Get to 59 Stamina and trigger the stamina refresh dialog on a 60 stamina fight if needs be.
-Loop2_Pixel_X_B := 1583
-Loop2_Pixel_Y_B := 813
+Loop2_Pixel_X_B := 1566
+Loop2_Pixel_Y_B := 803
 
 ;A Red pixel on the Champion Rainbow bar (so it clicks and skips the exp scrolling)
 ;This will search a 1x1 square centered on the given pixel for the given colour.
-Loop3_Pixel_X := 1856
-Loop3_Pixel_Y := 555
+Loop3_Pixel_X := 1819
+Loop3_Pixel_Y := 542
 Loop3_Pixel_C := 0xFF4B01
 
 ;A Pixel (white one preferably) in the "Next" button text, will be used for all the next buttons
 ;This will search a 3x3 square centered on the given pixel for the given colour.
-Loop4Plus_Pixel_X := 1568
-Loop4Plus_Pixel_Y := 895
+Loop4Plus_Pixel_X := 1533
+Loop4Plus_Pixel_Y := 881
 Loop4Plus_Pixel_C := 0xFFFFFF
 
 ;Crash Handling
