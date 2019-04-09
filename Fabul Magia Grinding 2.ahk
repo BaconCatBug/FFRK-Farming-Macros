@@ -185,8 +185,10 @@ CrashHandle:
 sleep 500
 MouseClick, Left, Crash_Close_Pixel_X, Crash_Close_Pixel_Y, 1, 0
 
+start1 := A_TickCount
 LoopC1:
 Loop{
+	now1 := A_TickCount-start1
 	PixelSearch, XX, YY, Crash_App_Launch_X-25, Crash_App_Launch_Y-25, Crash_App_Launch_X+25, Crash_App_Launch_Y+25, 0xFFFFFF, 5, Fast, RGB
 	if (XX != ""){
 	sleep 400
@@ -197,7 +199,7 @@ Loop{
 	BlockInput, MouseMoveOff
 	break LoopC1
 		}
-	}
+	} until now1 > 30000
 	
 start2 := A_TickCount 
 LoopC2:
