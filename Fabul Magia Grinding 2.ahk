@@ -13,36 +13,37 @@ CoordMode, Mouse, Screen
 ;A Yellow Pixel on the yellow crossed swords of Fabul Castle - 1st Battle.
 ;This will search a 3x3 square centered on the given pixel for the given colour.
 ;All colours in this section should be of the format 0xRRGGBB
-Loop1_Pixel_X := 1443
-Loop1_Pixel_Y := 637
+Loop1_Pixel_X := 1435
+Loop1_Pixel_Y := 650
 Loop1_Pixel_C := 0xF9ED5D
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
 ;This will search a 2x2 square, with top left corner on the provided values.
-Loop2_Pixel_X := 1725
-Loop2_Pixel_Y := 635
-Loop2_Pixel_C := 0x1C60EB
+Loop2_Pixel_X := 1722
+Loop2_Pixel_Y := 649
+Loop2_Pixel_C := 0x1E51EA
 
 ;The same Pixel but the orange of the spend gems dialog, to enter slow mode when out of stamina.
 ;The macro should work without you changing this thanks to variation matching but it's worth double checking.
 ;In any case it shouldn't spend gems even if it does click as Loop3 is looking for red, not blue.
-Loop2_Pixel_O := 0xE26B20
+;Get to 59 Stamina and trigger the stamina refresh dialog on a 60 stamina fight if needs be.
+Loop2_Pixel_O := 0xDE701E 
 
 ;The position of the "Back" button when you've run out of stamina.
 ;Get to 59 Stamina and trigger the stamina refresh dialog on a 60 stamina fight if needs be.
-Loop2_Pixel_X_B := 1566
-Loop2_Pixel_Y_B := 803
+Loop2_Pixel_X_B := 1557
+Loop2_Pixel_Y_B := 810
 
 ;A Red pixel on the Champion Rainbow bar (so it clicks and skips the exp scrolling)
 ;This will search a 1x1 square centered on the given pixel for the given colour.
-Loop3_Pixel_X := 1819
-Loop3_Pixel_Y := 542
-Loop3_Pixel_C := 0xFF4B01
+Loop3_Pixel_X := 1821
+Loop3_Pixel_Y := 554
+Loop3_Pixel_C := 0xFF4900
 
 ;A Pixel (white one preferably) in the "Next" button text, will be used for all the next buttons
 ;This will search a 3x3 square centered on the given pixel for the given colour.
-Loop4Plus_Pixel_X := 1533
-Loop4Plus_Pixel_Y := 881
+Loop4Plus_Pixel_X := 1526
+Loop4Plus_Pixel_Y := 900
 Loop4Plus_Pixel_C := 0xFFFFFF
 
 ;Crash Handling
@@ -51,29 +52,30 @@ Loop4Plus_Pixel_C := 0xFFFFFF
 ;This only works for emulators with a tab-like switcher at the top of the screen, like MuMu or MeMu.
 ;However, since this relies on exact positioning, the emulator needs to be at the same position each time.
 ;Please visit https://redd.it/b9xn3z for instructions on how to force MuMu into the same position each time.
-Enable_Crash_Handle := 0
+Enable_Crash_Handle := 1
 
 ;The position of the X that closes the current tab (this is for the infinite black loading screen crash)
-Crash_Close_Pixel_X := 1555
-Crash_Close_Pixel_Y := 17
+Crash_Close_Pixel_X := 1480
+Crash_Close_Pixel_Y := 8
+
 ;The position of the FFRK launcher icon. This searches for a white pixel so put the coordinates somewhere in the middle.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
-Crash_App_Launch_X := 1831
-Crash_App_Launch_Y := 163
+Crash_App_Launch_X := 1790
+Crash_App_Launch_Y := 187
 ;The position and colour of the blue "Play" button when FFRK launches.
-Crash_Play_X := 1589
-Crash_Play_Y := 739
-Crash_Play_C := 0x1C8FF5
+Crash_Play_X := 1563
+Crash_Play_Y := 740
+Crash_Play_C := 0x1D95F7
 ;The position and colour of the blue "OK" button when resuming an interupted fight (This is for the battle load crash).
-Crash_OK_X := 1725
-Crash_OK_Y := 661
+Crash_OK_X := 1693
+Crash_OK_Y := 660
 Crash_OK_C := 0x1D95F7
 ;The position and colour of the weird greenish lamp thing in the top left of the Realm Dungeon button where it says "In Battle"
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
-Crash_In_Battle_X := 1365
-Crash_In_Battle_Y := 580
-Crash_In_Battle_C := 0xDBF4E5
+Crash_In_Battle_X := 1313
+Crash_In_Battle_Y := 583
+Crash_In_Battle_C := 0x7DCBBB
 
 ;*****************************************************************;
 ;**Do not edit below this line (or do, I'm a comment, not a cop)**;
@@ -184,7 +186,9 @@ loop{
 CrashHandle:
 sleep 500
 MouseClick, Left, Crash_Close_Pixel_X, Crash_Close_Pixel_Y, 1, 0
-
+sleep 50
+MouseClick, Left, Crash_Close_Pixel_X, Crash_Close_Pixel_Y+50, 1, 0
+sleep 500
 start1 := A_TickCount
 LoopC1:
 Loop{
