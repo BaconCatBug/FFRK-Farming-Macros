@@ -186,8 +186,8 @@ loop{
 CrashHandle:
 sleep 500
 MouseClick, Left, Crash_Close_Pixel_X, Crash_Close_Pixel_Y, 1, 0
-sleep 50
-MouseClick, Left, Crash_Close_Pixel_X, Crash_Close_Pixel_Y+50, 1, 0
+sleep 500
+MouseClick, Left, Crash_App_Launch_X, Crash_App_Launch_Y, 1, 0
 sleep 500
 start1 := A_TickCount
 LoopC1:
