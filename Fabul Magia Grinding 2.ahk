@@ -89,7 +89,7 @@ loop{
 		if (resumed = 1){
 		break Loop1
 		}
-		PixelSearch, XX, YY, Loop1_Pixel_X-1, Loop1_Pixel_Y-1, Loop1_Pixel_X+1, Loop1_Pixel_Y+1, %Loop1_Pixel_C%, 1, Fast, RGB
+		PixelSearch, XX, YY, Loop1_Pixel_X-1, Loop1_Pixel_Y-1, Loop1_Pixel_X+1, Loop1_Pixel_Y+1, %Loop1_Pixel_C%, 1, Fast RGB
 		if (XX != ""){
 		sleep 400
 		BlockInput, MouseMove
@@ -113,14 +113,14 @@ loop{
 		break Loop2
 		}
 		;tooltip, 2
-		PixelSearch, ZZ, YY, Loop2_Pixel_X, Loop2_Pixel_Y, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_O, 5, Fast, RGB
+		PixelSearch, ZZ, YY, Loop2_Pixel_X, Loop2_Pixel_Y, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_O, 5, Fast RGB
 		if (ZZ != ""){
 		sleep 1000
 		MouseClick, Left, Loop2_Pixel_X_B, Loop2_Pixel_Y_B, 1, 0
 		Sleep 180000
 		Reload
 		}
-		PixelSearch, XX, YY, Loop2_Pixel_X, Loop2_Pixel_Y, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_C, 2, Fast, RGB
+		PixelSearch, XX, YY, Loop2_Pixel_X, Loop2_Pixel_Y, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_C, 2, Fast RGB
 		if (XX != ""){
 		sleep 400
 		BlockInput, MouseMove
@@ -140,7 +140,7 @@ loop{
 	Loop3:
 	loop{
 		resumed := 0
-		PixelSearch, XX, YY, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_C, 2, Fast, RGB
+		PixelSearch, XX, YY, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_C, 2, Fast RGB
 		if (XX != ""){
 		sleep 400
 		BlockInput, MouseMove
@@ -159,14 +159,14 @@ loop{
 	count2 = 0
 	LoopB:
 	loop{
-		PixelSearch, ZZ, YY, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 0x000000, 0, Fast, RGB
+		PixelSearch, ZZ, YY, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 0x000000, 0, Fast RGB
 		if (ZZ != ""){
 		break LoopB
 		}
 		count = 0
 		Loop4:
 		loop{
-			PixelSearch, XX, YY, Loop4Plus_Pixel_X-1, Loop4Plus_Pixel_Y-1, Loop4Plus_Pixel_X+1, Loop4Plus_Pixel_Y+1, Loop4Plus_Pixel_C, 2, Fast, RGB
+			PixelSearch, XX, YY, Loop4Plus_Pixel_X-1, Loop4Plus_Pixel_Y-1, Loop4Plus_Pixel_X+1, Loop4Plus_Pixel_Y+1, Loop4Plus_Pixel_C, 2, Fast RGB
 			count++
 			if (XX !=""){
 			sleep 100
@@ -178,22 +178,22 @@ loop{
 			break Loop4
 			}
 			count2++
-			} until count >10 
-		} until count2 > 100
+			} until count > 20
+		} until count2 > 150
 		sleep 750
 }
 
 CrashHandle:
-sleep 500
+sleep 1000
 MouseClick, Left, Crash_Close_Pixel_X, Crash_Close_Pixel_Y, 1, 0
-sleep 500
-MouseClick, Left, Crash_App_Launch_X, Crash_App_Launch_Y, 1, 0
-sleep 500
+sleep 1000
+MouseClick, Left, Crash_App_Launch_X, Crash_App_Launch_Y+25, 1, 0
+sleep 1000
 start1 := A_TickCount
 LoopC1:
 Loop{
 	now1 := A_TickCount-start1
-	PixelSearch, XX, YY, Crash_App_Launch_X-25, Crash_App_Launch_Y-25, Crash_App_Launch_X+25, Crash_App_Launch_Y+25, 0xFFFFFF, 5, Fast, RGB
+	PixelSearch, XX, YY, Crash_App_Launch_X-25, Crash_App_Launch_Y-25, Crash_App_Launch_X+25, Crash_App_Launch_Y+25, 0xFFFFFF, 5, Fast RGB
 	if (XX != ""){
 	sleep 400
 	BlockInput, MouseMove
@@ -209,7 +209,7 @@ start2 := A_TickCount
 LoopC2:
 Loop{
 	now2 := A_TickCount-start2
-	PixelSearch, XX, YY, Crash_Play_X-2, Crash_Play_Y-2, Crash_Play_X+2, Crash_Play_Y+2, Crash_Play_C, 2, Fast, RGB
+	PixelSearch, XX, YY, Crash_Play_X-2, Crash_Play_Y-2, Crash_Play_X+2, Crash_Play_Y+2, Crash_Play_C, 2, Fast RGB
 	if (XX != ""){
 	sleep 400
 	BlockInput, MouseMove
@@ -227,7 +227,7 @@ start3 := A_TickCount
 LoopC3:
 Loop{
 	now3 := A_TickCount-start3
-	PixelSearch, XX, YY, Crash_OK_X-2, Crash_OK_Y-2, Crash_OK_X+2, Crash_OK_Y+2, Crash_OK_C, 2, Fast, RGB
+	PixelSearch, XX, YY, Crash_OK_X-2, Crash_OK_Y-2, Crash_OK_X+2, Crash_OK_Y+2, Crash_OK_C, 2, Fast RGB
 	if (XX != ""){
 	sleep 400
 	BlockInput, MouseMove
@@ -247,7 +247,7 @@ Loop{
 	break LoopC4
 	}
 	now4 := A_TickCount-start4
-	PixelSearch, XX, YY, Crash_In_Battle_X-2, Crash_In_Battle_Y-2, Crash_In_Battle_X+2, Crash_In_Battle_Y+2, Crash_In_Battle_C, 6, Fast, RGB
+	PixelSearch, XX, YY, Crash_In_Battle_X-2, Crash_In_Battle_Y-2, Crash_In_Battle_X+2, Crash_In_Battle_Y+2, Crash_In_Battle_C, 6, Fast RGB
 	if (XX != ""){
 	sleep 400
 	BlockInput, MouseMove
