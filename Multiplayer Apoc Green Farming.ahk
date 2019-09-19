@@ -66,6 +66,8 @@ Loop7_Pixel_C := 0xFFDD8E
 
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
+;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
+;If it stalls on the orange button set the pixel a little higher.
 ;This will search a 3x3 square centred on the given pixel for the given colour.
 Loop8_Pixel_X := 1718
 Loop8_Pixel_Y := 664

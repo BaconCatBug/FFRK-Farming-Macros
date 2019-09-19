@@ -20,6 +20,8 @@ Loop1_Pixel_Y := 650
 Loop1_Pixel_C := 0xF9ED5D
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
+;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
+;If it stalls on the orange button set the pixel a little higher.
 ;This will search a 2x2 square, with top left corner on the provided values.
 Loop2_Pixel_X := 1722
 Loop2_Pixel_Y := 649
