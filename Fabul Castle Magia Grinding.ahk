@@ -70,11 +70,10 @@ Crash_App_Launch_Y := 187
 Crash_Play_X := 1563
 Crash_Play_Y := 740
 Crash_Play_C := 0x1D95F7
-;The position and colour of the brown "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_Cancel_X := 1387
-Crash_Cancel_Y := 658
-Crash_Cancel_C := 0x723314
-
+;The position and colour of the blue "OK" button when resuming an interrupted fight (This is for the battle load crash).
+Crash_OK_X := 1693
+Crash_OK_Y := 660
+Crash_OK_C := 0x1D95F7
 ;The position and colour of the weird greenish lamp thing in the top left of the Realm Dungeon button where it says "In Battle"
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
 Crash_In_Battle_X := 1313
@@ -90,6 +89,9 @@ loop{
 	start1 := A_TickCount 
 	Loop1:
 	loop{
+		if (resumed = 1){
+		break Loop1
+		}
 		PixelSearch, XX, YY, Loop1_Pixel_X-1, Loop1_Pixel_Y-1, Loop1_Pixel_X+1, Loop1_Pixel_Y+1, Loop1_Pixel_C, 1, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -110,6 +112,9 @@ loop{
 	start2 := A_TickCount 
 	Loop2:
 	loop{
+		if (resumed = 1){
+		break Loop2
+		}
 		;tooltip, 2
 		PixelSearch, ZZ, YY, Loop2_Pixel_X, Loop2_Pixel_Y, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_O, 5, Fast RGB
 		if (ZZ != ""){
@@ -137,6 +142,7 @@ loop{
 	start3 := A_TickCount 
 	Loop3:
 	loop{
+		resumed := 0
 		PixelSearch, XX, YY, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_X, Loop3_Pixel_Y, Loop3_Pixel_C, 2, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -218,19 +224,21 @@ Loop{
 		}
 	} until now2 > 45000
 
+resumed := 0
 
 start3 := A_TickCount
 LoopC3:
 Loop{
 	now3 := A_TickCount-start3
-	PixelSearch, XX, YY, Crash_Cancel_X-2, Crash_Cancel_Y-2, Crash_Cancel_X+2, Crash_Cancel_Y+2, Crash_Cancel_C, 2, Fast RGB
+	PixelSearch, XX, YY, Crash_OK_X-2, Crash_OK_Y-2, Crash_OK_X+2, Crash_OK_Y+2, Crash_OK_C, 2, Fast RGB
 	if (XX != ""){
 	sleep 400
 	BlockInput, MouseMove
 	sleep 100
-	MouseClick, Left, Crash_Cancel_X, Crash_Cancel_Y, 1, 0
+	MouseClick, Left, Crash_OK_X, Crash_OK_Y, 1, 0
 	sleep 100
 	BlockInput, MouseMoveOff
+	resumed := 1
 	break LoopC3
 		}
 	} until now3 > 10000
@@ -238,6 +246,9 @@ Loop{
 start4 := A_TickCount
 LoopC4:
 Loop{
+	if (resumed = 1){
+	break LoopC4
+	}
 	now4 := A_TickCount-start4
 	PixelSearch, XX, YY, Crash_In_Battle_X-2, Crash_In_Battle_Y-2, Crash_In_Battle_X+2, Crash_In_Battle_Y+2, Crash_In_Battle_C, 6, Fast RGB
 	if (XX != ""){
