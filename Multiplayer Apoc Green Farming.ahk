@@ -119,10 +119,10 @@ Crash_Play_X := 1563
 Crash_Play_Y := 740
 Crash_Play_C := 0x1D95F7
 
-;The position and colour of the brown "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_Cancel_X := 1387
-Crash_Cancel_Y := 658
-Crash_Cancel_C := 0x723314
+;The position and colour of the blue "OK" button when resuming an interrupted fight (This is for the battle load crash).
+Crash_OK_X := 1693
+Crash_OK_Y := 660
+Crash_OK_C := 0x1D95F7
 
 ;The position and colour of the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button.
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
@@ -153,6 +153,9 @@ loop{
 	start1 := A_TickCount 
 	Loop1:
 	loop{
+		if (resumed = 1){
+		break Loop1
+		}
 		PixelSearch, XX, YY, Loop1_Pixel_X-1, Loop1_Pixel_Y-1, Loop1_Pixel_X+1, Loop1_Pixel_Y+1, Loop1_Pixel_C, 5, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -173,6 +176,9 @@ loop{
 	start2 := A_TickCount 
 	Loop2:
 	loop{
+		if (resumed = 1){
+		break Loop2
+		}
 		PixelSearch, XX, YY, Loop2_Pixel_X-1, Loop2_Pixel_Y-1, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -193,6 +199,9 @@ loop{
 	start3 := A_TickCount 
 	Loop3:
 	loop{
+		if (resumed = 1){
+		break Loop3
+		}
 		PixelSearch, XX, YY, Loop3_Pixel_X-1, Loop3_Pixel_Y-1, Loop3_Pixel_X+1, Loop3_Pixel_Y+1, Loop3_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -213,6 +222,9 @@ loop{
 	start4 := A_TickCount 
 	Loop4:
 	loop{
+		if (resumed = 1){
+		break Loop4
+		}
 		PixelSearch, XX, YY, Loop4_Pixel_X-1, Loop4_Pixel_Y-1, Loop4_Pixel_X+1, Loop4_Pixel_Y+1, Loop4_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -233,6 +245,9 @@ loop{
 	start5 := A_TickCount 
 	Loop5:
 	loop{
+		if (resumed = 1){
+		break Loop5
+		}
 		PixelSearch, XX, YY, Loop5_Pixel_X-1, Loop5_Pixel_Y-1, Loop5_Pixel_X+1, Loop5_Pixel_Y+1, Loop5_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -256,6 +271,9 @@ loop{
 	start6 := A_TickCount 
 	Loop6:
 	loop{
+		if (resumed = 1){
+		break Loop6
+		}
 		PixelSearch, XX, YY, Loop6_Pixel_X-1, Loop6_Pixel_Y-1, Loop6_Pixel_X+1, Loop6_Pixel_Y+1, Loop6_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -276,6 +294,9 @@ loop{
 	start7 := A_TickCount 
 	Loop7:
 	loop{
+		if (resumed = 1){
+		break Loop7
+		}
 		PixelSearch, XX, YY, Loop7_Pixel_X-1, Loop7_Pixel_Y-1, Loop7_Pixel_X+1, Loop7_Pixel_Y+1, Loop7_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -296,6 +317,9 @@ loop{
 	start8 := A_TickCount 
 	Loop8:
 	loop{
+		if (resumed = 1){
+		break Loop8
+		}
 		PixelSearch, ZZ, YY, Loop8_Pixel_X-1, Loop8_Pixel_Y-1, Loop8_Pixel_X+1, Loop8_Pixel_Y+1, Loop8_Pixel_O, 5, Fast RGB
 		if (ZZ != ""){
 		sleep 1000
@@ -322,6 +346,7 @@ loop{
 	start9 := A_TickCount 
 	Loop9:
 	loop{
+		resumed := 0
 		PixelSearch, XX, YY, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_C, 2, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -403,19 +428,21 @@ Loop{
 		}
 	} until now2 > Menu_Timeout*1000
 
+resumed := 0
 
 start3 := A_TickCount
 LoopC3:
 Loop{
 	now3 := A_TickCount-start3
-	PixelSearch, XX, YY, Crash_Cancel_X-2, Crash_Cancel_Y-2, Crash_Cancel_X+2, Crash_Cancel_Y+2, Crash_Cancel_C, 2, Fast RGB
+	PixelSearch, XX, YY, Crash_OK_X-2, Crash_OK_Y-2, Crash_OK_X+2, Crash_OK_Y+2, Crash_OK_C, 2, Fast RGB
 	if (XX != ""){
 	sleep 400
 	BlockInput, MouseMove
 	sleep 100
-	MouseClick, Left, Crash_Cancel_X, Crash_Cancel_Y, 1, 0
+	MouseClick, Left, Crash_OK_X, Crash_OK_Y, 1, 0
 	sleep 100
 	BlockInput, MouseMoveOff
+	resumed := 1
 	break LoopC3
 		}
 	} until now3 > 10000
@@ -423,6 +450,9 @@ Loop{
 start4 := A_TickCount
 LoopC4:
 Loop{
+	if (resumed = 1){
+	break LoopC4
+	}
 	now4 := A_TickCount-start4
 	PixelSearch, XX, YY, Crash_Home_Screen_X-2, Crash_Home_Screen_Y-2, Crash_Home_Screen_X+2, Crash_Home_Screen_Y+2, Crash_Home_Screen_C, 6, Fast RGB
 	if (XX != ""){
@@ -440,6 +470,9 @@ Loop{
 start5 := A_TickCount
 LoopC5:
 Loop{
+	if (resumed = 1){
+	break LoopC5
+	}
 	now5 := A_TickCount-start5
 	PixelSearch, XX, YY, Crash_Raid_Dungeons_X-2, Crash_Raid_Dungeons_Y-2, Crash_Raid_Dungeons_X+2, Crash_Raid_Dungeons_Y+2, Crash_Raid_Dungeons_C, 6, Fast RGB
 	if (XX != ""){
@@ -457,6 +490,9 @@ Loop{
 start6 := A_TickCount
 LoopC6:
 Loop{
+	if (resumed = 1){
+	break LoopC6
+	}
 	now6 := A_TickCount-start6
 	PixelSearch, XX, YY, Crash_Event_Dungeons_X-2, Crash_Event_Dungeons_Y-2, Crash_Event_Dungeons_X+2, Crash_Event_Dungeons_Y+2, Crash_Event_Dungeons_C, 6, Fast RGB
 	if (XX != ""){
