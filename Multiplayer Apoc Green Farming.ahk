@@ -380,7 +380,7 @@ loop{
 			}
 			count2++
 			} until count > 20
-		} until count2 > 200
+		} until count2 > 400
 		sleep 750
 
 }
