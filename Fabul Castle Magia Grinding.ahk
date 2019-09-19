@@ -44,9 +44,9 @@ Loop3_Pixel_C := 0xFF4900
 
 ;A Pixel (white one preferably) in the "Next" button text, will be used for all the next buttons
 ;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop4Plus_Pixel_X := 1526
-Loop4Plus_Pixel_Y := 900
-Loop4Plus_Pixel_C := 0xFFFFFF
+Loop4_Pixel_X := 1526
+Loop4_Pixel_Y := 900
+Loop4_Pixel_C := 0xFFFFFF
 
 ;Crash Handling
 ;This will enable the macro to recover for when (yes, when) FFRK crashes.
@@ -147,7 +147,7 @@ loop{
 		sleep 400
 		BlockInput, MouseMove
 		sleep 100
-		MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
+		MouseClick, Left, Loop4_Pixel_X, Loop4_Pixel_Y, 1, 0
 		BlockInput, MouseMoveOff
 		break Loop3
 		}
@@ -161,21 +161,21 @@ loop{
 	count2 = 0
 	LoopB:
 	loop{
-		PixelSearch, ZZ, YY, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 0x000000, 0, Fast RGB
+		PixelSearch, ZZ, YY, Loop4_Pixel_X, Loop4_Pixel_Y, Loop4_Pixel_X, Loop4_Pixel_Y, 0x000000, 0, Fast RGB
 		if (ZZ != ""){
 		break LoopB
 		}
 		count = 0
 		Loop4:
 		loop{
-			PixelSearch, XX, YY, Loop4Plus_Pixel_X-1, Loop4Plus_Pixel_Y-1, Loop4Plus_Pixel_X+1, Loop4Plus_Pixel_Y+1, Loop4Plus_Pixel_C, 2, Fast RGB
+			PixelSearch, XX, YY, Loop4_Pixel_X-1, Loop4_Pixel_Y-1, Loop4_Pixel_X+1, Loop4_Pixel_Y+1, Loop4_Pixel_C, 2, Fast RGB
 			count++
 			if (XX !=""){
 			sleep 100
 			BlockInput, MouseMove
-			MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
+			MouseClick, Left, Loop4_Pixel_X, Loop4_Pixel_Y, 1, 0
 			sleep 100
-			MouseClick, Left, Loop4Plus_Pixel_X, Loop4Plus_Pixel_Y, 1, 0
+			MouseClick, Left, Loop4_Pixel_X, Loop4_Pixel_Y, 1, 0
 			BlockInput, MouseMoveOff
 			break Loop4
 			}
