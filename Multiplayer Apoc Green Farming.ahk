@@ -70,8 +70,8 @@ Loop7_Pixel_C := 0xFFDD8E
 ;If it stalls on the orange button set the pixel a little higher.
 ;This will search a 3x3 square centred on the given pixel for the given colour.
 Loop8_Pixel_X := 1718
-Loop8_Pixel_Y := 664
-Loop8_Pixel_C := 0x1D55EA
+Loop8_Pixel_Y := 649
+Loop8_Pixel_C := 0x1D95F7
 
 ;The same Pixel but the orange of the spend gems dialogue, to enter slow mode when out of stamina.
 ;The macro should work without you changing this thanks to variation matching but it's worth double checking.
@@ -84,12 +84,11 @@ Loop8_Pixel_O := 0xDE701E
 Loop8_Pixel_X_B := 1557
 Loop8_Pixel_Y_B := 810
 
-
-;A Red pixel on the Champion Rainbow bar (so it clicks and skips the exp scrolling)
+;A BLUE pixel in the bottom right of the Battle Results Screen (the one with the Champion Rainbow bar, so it clicks and skips the exp scrolling)
 ;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop9_Pixel_X := 1822
-Loop9_Pixel_Y := 692
-Loop9_Pixel_C := 0xFF4900
+Loop9_Pixel_X := 1847
+Loop9_Pixel_Y := 967
+Loop9_Pixel_C := 0x0C2095
 
 ;A White Pixel in the "Next" button text after the battle is won, will be used for all the next buttons
 ;This will search a 3x3 square centred on the given pixel for the given colour.
@@ -130,6 +129,12 @@ Crash_Home_Screen_X := 1853
 Crash_Home_Screen_Y := 628
 Crash_Home_Screen_C := 0xFFFA74
 
+;The position and colour of a yellow pixel in the word "Battle" when you're In Battle in an event dungeon.
+;To force this screen, enter any event battle staging screen, and before going into the battle itself, press "Home".
+Crash_Event_Battle_X := 1539
+Crash_Event_Battle_Y := 646
+Crash_Event_Battle_C := 0xFEFEAE
+
 ;The position and colour of the white hair of the Bartz lookalike in the "Raid Dungeons" button.
 Crash_Raid_Dungeons_X := 1719
 Crash_Raid_Dungeons_Y := 84
@@ -141,8 +146,8 @@ Crash_Event_Dungeons_Y := 84
 Crash_Event_Dungeons_C := 0x87F829
 
 ;The a clickable position of the Dungeon you are farming.
-Crash_Farm_X := 1557
-Crash_Farm_Y := 268
+Crash_Farm_X := 1571
+Crash_Farm_Y := 452
 
 ;******************************************************************;
 ;**Do not edit below this line unless you know what you are doing**;
@@ -154,6 +159,9 @@ loop{
 	Loop1:
 	loop{
 		if (resumed = 1){
+		break Loop1
+		}
+		if (battlecrash = 1){
 		break Loop1
 		}
 		PixelSearch, XX, YY, Loop1_Pixel_X-1, Loop1_Pixel_Y-1, Loop1_Pixel_X+1, Loop1_Pixel_Y+1, Loop1_Pixel_C, 5, Fast RGB
@@ -179,6 +187,9 @@ loop{
 		if (resumed = 1){
 		break Loop2
 		}
+		if (battlecrash = 1){
+		break Loop2
+		}
 		PixelSearch, XX, YY, Loop2_Pixel_X-1, Loop2_Pixel_Y-1, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -200,6 +211,9 @@ loop{
 	Loop3:
 	loop{
 		if (resumed = 1){
+		break Loop3
+		}
+		if (battlecrash = 1){
 		break Loop3
 		}
 		PixelSearch, XX, YY, Loop3_Pixel_X-1, Loop3_Pixel_Y-1, Loop3_Pixel_X+1, Loop3_Pixel_Y+1, Loop3_Pixel_C, 4, Fast RGB
@@ -225,6 +239,9 @@ loop{
 		if (resumed = 1){
 		break Loop4
 		}
+		if (battlecrash = 1){
+		break Loop4
+		}
 		PixelSearch, XX, YY, Loop4_Pixel_X-1, Loop4_Pixel_Y-1, Loop4_Pixel_X+1, Loop4_Pixel_Y+1, Loop4_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -246,6 +263,9 @@ loop{
 	Loop5:
 	loop{
 		if (resumed = 1){
+		break Loop5
+		}
+		if (battlecrash = 1){
 		break Loop5
 		}
 		PixelSearch, XX, YY, Loop5_Pixel_X-1, Loop5_Pixel_Y-1, Loop5_Pixel_X+1, Loop5_Pixel_Y+1, Loop5_Pixel_C, 4, Fast RGB
@@ -274,6 +294,9 @@ loop{
 		if (resumed = 1){
 		break Loop6
 		}
+		if (battlecrash = 1){
+		break Loop6
+		}
 		PixelSearch, XX, YY, Loop6_Pixel_X-1, Loop6_Pixel_Y-1, Loop6_Pixel_X+1, Loop6_Pixel_Y+1, Loop6_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -294,6 +317,7 @@ loop{
 	start7 := A_TickCount 
 	Loop7:
 	loop{
+		battlecrash := 0
 		PixelSearch, XX, YY, Loop7_Pixel_X-1, Loop7_Pixel_Y-1, Loop7_Pixel_X+1, Loop7_Pixel_Y+1, Loop7_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
@@ -459,6 +483,19 @@ Loop{
 
 	break LoopC4
 	}
+	
+	PixelSearch, XX, YY, Crash_Event_Battle_X-2, Crash_Event_Battle_Y-2, Crash_Event_Battle_X+2, Crash_Event_Battle_Y+2, Crash_Event_Battle_C, 6, Fast RGB
+	if (XX != ""){
+	battlecrash := 1
+	sleep 400
+	BlockInput, MouseMove
+	sleep 100
+	MouseClick, Left, Crash_Event_Battle_X, Crash_Event_Battle_Y, 1, 0
+	sleep 100
+	BlockInput, MouseMoveOff
+
+	break LoopC4
+	}
 	} until now4 > Menu_Timeout*1000
 
 start5 := A_TickCount
@@ -467,6 +504,10 @@ Loop{
 	if (resumed = 1){
 	break LoopC5
 	}
+	if (battlecrash = 1){
+	break LoopC5
+	}
+	
 	now5 := A_TickCount-start5
 	PixelSearch, XX, YY, Crash_Raid_Dungeons_X-2, Crash_Raid_Dungeons_Y-2, Crash_Raid_Dungeons_X+2, Crash_Raid_Dungeons_Y+2, Crash_Raid_Dungeons_C, 6, Fast RGB
 	if (XX != ""){
@@ -481,10 +522,14 @@ Loop{
 	}
 	} until now5 > Menu_Timeout*1000
 	
+	
 start6 := A_TickCount
 LoopC6:
 Loop{
 	if (resumed = 1){
+	break LoopC6
+	}
+	if (battlecrash = 1){
 	break LoopC6
 	}
 	now6 := A_TickCount-start6
