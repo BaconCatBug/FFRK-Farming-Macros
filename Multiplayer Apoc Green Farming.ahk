@@ -84,11 +84,12 @@ Loop8_Pixel_O := 0xDE701E
 Loop8_Pixel_X_B := 1557
 Loop8_Pixel_Y_B := 810
 
-;A BLUE pixel in the bottom right of the Battle Results Screen (the one with the Champion Rainbow bar, so it clicks and skips the exp scrolling)
+;A WHITE pixel in the bottom right corner border of the Battle Results Screen (the one with the Champion Rainbow bar, so it clicks and skips the exp scrolling)
+;The colour code should be 0xFFFFFF unless you've got a really weird setup.
 ;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop9_Pixel_X := 1847
-Loop9_Pixel_Y := 967
-Loop9_Pixel_C := 0x0C2095
+Loop9_Pixel_X := 1861
+Loop9_Pixel_Y := 983
+Loop9_Pixel_C := 0xFFFFFF
 
 ;A White Pixel in the "Next" button text after the battle is won, will be used for all the next buttons
 ;This will search a 3x3 square centred on the given pixel for the given colour.
