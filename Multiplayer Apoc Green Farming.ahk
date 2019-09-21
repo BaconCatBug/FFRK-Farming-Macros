@@ -92,6 +92,7 @@ Loop9_Pixel_Y := 983
 Loop9_Pixel_C := 0xFFFFFF
 
 ;A White Pixel in the "Next" button text after the battle is won, will be used for all the next buttons
+;The colour code should be 0xFFFFFF unless you've got a really weird setup.
 ;This will search a 3x3 square centred on the given pixel for the given colour.
 Loop10_Pixel_X := 1526
 Loop10_Pixel_Y := 900
@@ -363,17 +364,25 @@ loop{
 		sleep 500
 	
 	start9 := A_TickCount 
+	findwhite := 0
 	Loop9:
 	loop{
 		resumed := 0
-		PixelSearch, XX, YY, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_C, 2, Fast RGB
+		PixelSearch, XX, YY, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_C, 1, Fast RGB
+		;tooltip, %findwhite%
+		if (XX = ""){
+		findwhite := 0
+		}
 		if (XX != ""){
+		findwhite++
+		if (findwhite>6) {
 		sleep 400
 		BlockInput, MouseMove
 		sleep 100
 		MouseClick, Left, Loop10_Pixel_X, Loop10_Pixel_Y, 1, 0
 		BlockInput, MouseMoveOff
 		break Loop9
+		}
 		}
 		now9 := A_TickCount-start9
 		if (now9 > Battle_Timeout*60*1000 && Enable_Crash_Handle = 1){
