@@ -375,7 +375,7 @@ loop{
 		}
 		if (XX != ""){
 		findwhite++
-		if (findwhite>6) {
+		if (findwhite>20) {
 		sleep 400
 		BlockInput, MouseMove
 		sleep 100
