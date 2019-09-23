@@ -320,7 +320,7 @@ loop{
 	Loop7:
 	loop{
 		battlecrash := 0
-		PixelSearch, XX, YY, Loop7_Pixel_X-1, Loop7_Pixel_Y-1, Loop7_Pixel_X+1, Loop7_Pixel_Y+1, Loop7_Pixel_C, 4, Fast RGB
+		PixelSearch, XX, YY, Loop7_Pixel_X-4, Loop7_Pixel_Y-4, Loop7_Pixel_X+4, Loop7_Pixel_Y+4, Loop7_Pixel_C, 4, Fast RGB
 		if (XX != ""){
 		sleep 400
 		BlockInput, MouseMove
