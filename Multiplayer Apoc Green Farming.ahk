@@ -69,9 +69,9 @@ Loop7_Pixel_C := 0xFFDD8E
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
 ;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop8_Pixel_X := 1718
-Loop8_Pixel_Y := 647
-Loop8_Pixel_C := 0x2590F4
+Loop8_Pixel_X := 1717
+Loop8_Pixel_Y := 660
+Loop8_Pixel_C := 0x2D92F4
 
 ;The same Pixel but the orange of the spend gems dialogue, to enter slow mode when out of stamina.
 ;The macro should work without you changing this thanks to variation matching but it's worth double checking.
