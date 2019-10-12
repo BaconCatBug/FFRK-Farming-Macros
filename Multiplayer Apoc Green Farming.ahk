@@ -1,102 +1,77 @@
 #SingleInstance Force
 #InstallMouseHook
-CoordMode, Pixel, Screen
+CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
 
-;Uncomment lines 9, 10 and 11 (Delete the ;)to enable the script to run as admin.
-;Usually needed if Windows 10 throws a tantrum and blocks the clicks.
-;If that doesn't work, compile the script and run as administrator.
-;SetWorkingDir %A_ScriptDir%
-;if not A_IsAdmin
-	;Run *RunAs "%A_ScriptFullPath%"
-
-;All Pixel coordinates in this section must use the "Screen (less often used)" value.
+;All pixel coordinates in this section must use the "Screen (less often used)" value.
+;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
+;If the script won't run for you in Windows 10, you need to set your variables, compile the script as an EXE then run the EXE as Administrator.
+;Alternitively set the AHK.exe main executable to always run as Administrator.
 
 ;The amount of time, in minutes, you want the script to wait while in the battle before it decides something has gone wrong and triggers the crash handling.
-Battle_Timeout := 6
+;(Default := 5)
+Battle_Timeout := 5
 
 ;The amount of time, in seconds, you want the script to wait in menus before it decides something has gone wrong and triggers the crash handling.
+;(Default := 30)
 Menu_Timeout := 30
 
-;A Purple Pixel on the top right corner of the "(Apocalypse +)" dungeon button.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop1_Pixel_X := 1773
-Loop1_Pixel_Y := 483
-Loop1_Pixel_C := 0x54023B
+;The amount of time, in milliseconds, the script will wait between finding a pixel and clicking.
+;Due to FFRK's habit of drawing menus before they are clickable, setting this bellow 400ms will generally result in the script stalling, but you can tweak it to your pleasure.
+;(Default := 350)
+Click_Timeout := 350
 
-;A Blue Pixel on the "Enter Dungeon" button.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop2_Pixel_X := 1782
-Loop2_Pixel_Y := 946
-Loop2_Pixel_C := 0x1E41D5
+;A Purple pixel on the top right corner of the "(Apocalypse +)" dungeon button.
+Apocalypse_Purple := [1802,513,0x270625]
 
-;A Brown Pixel on the "Solo Raid" button.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop3_Pixel_X := 1328
-Loop3_Pixel_Y := 585
-Loop3_Pixel_C := 0x4B1F0F
+;A Blue pixel on the "Enter Dungeon" button.
+Enter_Dungeon_Blue := [1792,955,0x0D2ECC]
 
-;A Blue Pixel on the "Next" button.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop4_Pixel_X := 1632
-Loop4_Pixel_Y := 948
-Loop4_Pixel_C := 0x1E48E1
+;A Brown pixel on the "Solo Raid" button.
+Solo_Raid_Brown := [1324,587,0x4B1F0F]
 
-;A Brown Pixel on the "Remove" button of the first roaming warrior.
+;A White pixel on the "Next" button.
+Next_Blue := [1631,959,0x0725B4]
+
+;A Brown pixel on the "Remove" button of the first Roaming Warrior.
 ;This script is intended for farming, if you need to rely on Cloud USB1 this script isn't for you.
 ;If you really want to use the top RW, change the "Use_RW" variable to 1
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop5_Pixel_X := 1788
-Loop5_Pixel_Y := 501
-Loop5_Pixel_C := 0x5A2713
+Remove_Brown := [1822,502,0x582612]
 Use_RW := 0
 
-;A Blue Pixel on the "GO!" button.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop6_Pixel_X := 1620
-Loop6_Pixel_Y := 949
-Loop6_Pixel_C := 0x1137D1
+;A Blue pixel on the "GO!" button.
+Go_Blue := [1627,952,0x1238D2]
 
-;A Yellow Pixel on the "1" underneath the word "Stamina".
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop7_Pixel_X := 1524
-Loop7_Pixel_Y := 510
-Loop7_Pixel_C := 0xFFDD8E
+;A Yellow pixel on the "1" underneath the word "Stamina".
+;Searches a 50x50 box on the specified pixel.
+One_Yellow := [1524,510,0xFFDD8E]
 
-
-;A Blue Pixel directly above the first "t" in "Begin Battle".
+;A Blue pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop8_Pixel_X := 1717
-Loop8_Pixel_Y := 660
-Loop8_Pixel_C := 0x2D92F4
+Battle_Blue := [1718,658,0x1F76E2]
 
-;The same Pixel but the orange of the spend gems dialogue, to enter slow mode when out of stamina.
+;The same pixel but the ORANGE of the spend gems dialogue, to enter slow mode when out of stamina.
 ;The macro should work without you changing this thanks to variation matching but it's worth double checking.
-;In any case it shouldn't spend gems even if it does click as Loop9 is looking for red, not blue.
+;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for red, not blue.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Loop8_Pixel_O := 0xDE701E 
+Battle_Orange := 0xDE701E 
 
-;The position of the "Back" button when you've run out of stamina.
+;A BLUE pixel on the "Back" button when you've run out of stamina.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Loop8_Pixel_X_B := 1510
-Loop8_Pixel_Y_B := 829
+Back_Blue := [1526,841,0x02186E]
 
-;A WHITE pixel in the bottom right corner border of the Battle Results Screen (the one with the Champion Rainbow bar, so it clicks and skips the exp scrolling)
+;A WHITE pixel in the bottom right corner border of the Battle Results Screen (the one with the Champion Rainbow bar, so it detects the end of the battle).
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop9_Pixel_X := 1861
-Loop9_Pixel_Y := 995
-Loop9_Pixel_C := 0xFFFFFF
+;Searches a 50x50 box on the specified pixel.
+Corner_White := [1865,986,0xFFFFFF]
 
-;A White Pixel in the "Next" button text after the battle is won, will be used for all the next buttons
+;A WHITE pixel in the "Next" button text after the battle is won, will be used for all the next buttons.
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
-;This will search a 3x3 square centred on the given pixel for the given colour.
-Loop10_Pixel_X := 1525
-Loop10_Pixel_Y := 921
-Loop10_Pixel_C := 0xFFFFFF
+;Black_Loading_Screen_Colour is the black of the loading screen when returning to menu in case your one is weird.
+Next_White := [1543,921,0xFFFFFF]
+Black_Loading_Screen_Colour := 0x000000
 
 ;Crash Handling
 ;This will enable the macro to recover for when (yes, when) FFRK crashes.
@@ -105,457 +80,300 @@ Loop10_Pixel_C := 0xFFFFFF
 ;However, since this relies on exact positioning, the emulator needs to be at the same position each time.
 Enable_Crash_Handle := 1
 
-;The position of the X that closes the current tab (this is for the infinite black loading screen crash)
-Crash_Close_Pixel_X := 1480
-Crash_Close_Pixel_Y := 7
+;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
+Crash_Close_pixel := [1480,7,0x0DC5A0]
 
-;The position of the FFRK launcher icon. This searches for a white pixel so put the coordinates somewhere in the middle.
+;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
-Crash_App_Launch_X := 1792
-Crash_App_Launch_Y := 330
+Crash_App_Launch := [1801,338,0xFFFFFF]
 
-;The position and colour of the blue "Play" button when FFRK launches.
-Crash_Play_X := 1520
-Crash_Play_Y := 768
-Crash_Play_C := 0x1742D8
+;A BLUE pixel on the blue "Play" button when FFRK launches.
+Crash_Play_Blue := [1613,782,0x0B2096]
 
-;The position and colour of the brown "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_Cancel_X := 1339
-Crash_Cancel_Y := 694
-Crash_Cancel_C := 0x3F2307
+;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
+Crash_Cancel_Brown := [1448,692,0x422209]
 
-;The position and colour of the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button.
+;A YELLOW pixel on the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button.
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
-Crash_Home_Screen_X := 1853
-Crash_Home_Screen_Y := 633
-Crash_Home_Screen_C := 0xF8E164
+Crash_Home_Screen_Yellow := [1854,635,0xFFFF84]
 
-;The position and colour of a yellow pixel in the word "Battle" when you're In Battle in an event dungeon.
+;A YELLOW pixel in the word "Battle" when you're In Battle in an event dungeon.
 ;To force this screen, enter any event battle staging screen, and before going into the battle itself, press "Home".
-Crash_Event_Battle_X := 1538
-Crash_Event_Battle_Y := 657
-Crash_Event_Battle_C := 0xFFFEC2
+Crash_Event_Battle_Yellow := [1547,657,0xFEFEAF]
 
-;The position and colour of the white hair of the Bartz lookalike in the "Raid Dungeons" button.
-Crash_Raid_Dungeons_X := 1716
-Crash_Raid_Dungeons_Y := 93
-Crash_Raid_Dungeons_C := 0xFDFEFF
+;A WHITE pixel on the white hair of the Bartz lookalike in the "Raid Dungeons" button.
+Crash_Raid_Dungeons_White := [1719,98,0xFCFEFE]
 
-;The position and colour of the green hair of the Bartz lookalike in the "Event Dungeons" button.
-Crash_Event_Dungeons_X := 1764
-Crash_Event_Dungeons_Y := 97
-Crash_Event_Dungeons_C := 0x89EA14
+;A GREEN pixel on the green hair of the Bartz lookalike in the "Event Dungeons" button.
+Crash_Event_Dungeons_Green := [1764,98,0x89E810]
 
-;The a clickable position of the Dungeon you are farming.
-Crash_Farm_X := 1624
-Crash_Farm_Y := 272
+;Any pixel on the banner of the event you are farming.
+Crash_Farm_Dungeon := [1601,475,0x9D16CB]
 
-;******************************************************************;
-;**Do not edit below this line unless you know what you are doing**;
-;******************************************************************;
+;*******************************************************************;
+;**Do not edit below this line unless you know what you are doing.**;
+;*****************Or do, I'm a comment, not a cop.******************;
+;*******************************************************************;
 
-Loop0:
-loop{	
-	start1 := A_TickCount 
-	Loop1:
+;Define MenuPixelFinder
+MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,battle_timeout,resumed:=0,battle_crash:=0,expanded:=0) {
+	timeout_start := A_TickCount
 	loop{
-		if (resumed = 1){
-		break Loop1
+		if (resumed == 1){
+			return 0
 		}
-		if (battlecrash = 1){
-		break Loop1
+		if (battle_crash == 1){
+			return 0
 		}
-		PixelSearch, XX, YY, Loop1_Pixel_X-1, Loop1_Pixel_Y-1, Loop1_Pixel_X+1, Loop1_Pixel_Y+1, Loop1_Pixel_C, 5, Fast RGB
+		if(expanded == 0){
+		pixelSearch, XX, YY, posX-1, posY-1, posX+1, posY+1, colour_value, 5, Fast RGB
+		} else {
+		pixelSearch, XX, YY, posX-24, posY-24, posX+24, posY+24, colour_value, 5, Fast RGB
+		}
 		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop1_Pixel_X, Loop1_Pixel_Y, 1, 0
-		sleep 100
-		BlockInput, MouseMoveOff
-		break Loop1
+			sleep click_timeout
+			BlockInput, MouseMove
+			sleep 100
+			MouseClick, Left, posX, posY, 1, 0
+			sleep 100
+			BlockInput, MouseMoveOff
+			return 0
 		}
-		now1 := A_TickCount-start1
-		if (now1 > Menu_Timeout*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
+		now := A_TickCount-timeout_start
+		if (now > menu_timeout*1000 && crash_handle == 1){
+			return 1
 		}
-		}
-		sleep 500
+	}
+}
+
+;Menu clickings
+Main_Loop:
+loop{
+	if(MenuPixelFinder(Apocalypse_Purple[1],Apocalypse_Purple[2],Apocalypse_Purple[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+		goto CrashHandle
 		
-	start2 := A_TickCount 
-	Loop2:
-	loop{
-		if (resumed = 1){
-		break Loop2
-		}
-		if (battlecrash = 1){
-		break Loop2
-		}
-		PixelSearch, XX, YY, Loop2_Pixel_X-1, Loop2_Pixel_Y-1, Loop2_Pixel_X+1, Loop2_Pixel_Y+1, Loop2_Pixel_C, 4, Fast RGB
-		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop2_Pixel_X, Loop2_Pixel_Y, 1, 0
-		sleep 100
-		BlockInput, MouseMoveOff
-		break Loop2
-		}
-		now2 := A_TickCount-start2
-		if (now2 > Menu_Timeout*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
-		}
-		}
-		sleep 500
+	sleep click_timeout
+	if(MenuPixelFinder(Enter_Dungeon_Blue[1],Enter_Dungeon_Blue[2],Enter_Dungeon_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+		goto CrashHandle
 		
-	start3 := A_TickCount 
-	Loop3:
-	loop{
-		if (resumed = 1){
-		break Loop3
-		}
-		if (battlecrash = 1){
-		break Loop3
-		}
-		PixelSearch, XX, YY, Loop3_Pixel_X-1, Loop3_Pixel_Y-1, Loop3_Pixel_X+1, Loop3_Pixel_Y+1, Loop3_Pixel_C, 4, Fast RGB
-		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop3_Pixel_X, Loop3_Pixel_Y, 1, 0
-		sleep 100
-		BlockInput, MouseMoveOff
-		break Loop3
-		}
-		now3 := A_TickCount-start3
-		if (now3 > Menu_Timeout*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
-		}
-		}
-		sleep 500
+	sleep click_timeout
+	if(MenuPixelFinder(Solo_Raid_Brown[1],Solo_Raid_Brown[2],Solo_Raid_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+		goto CrashHandle
+		
+	sleep click_timeout
+	if(MenuPixelFinder(Next_Blue[1],Next_Blue[2],Next_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+		goto CrashHandle
+		
+	sleep click_timeout
+	if(MenuPixelFinder(Remove_Brown[1],Remove_Brown[2],Remove_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+		goto CrashHandle
+		
+	sleep click_timeout
+	if(MenuPixelFinder(Go_Blue[1],Go_Blue[2],Go_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+		goto CrashHandle
+		
+	battle_crash := 0
+	resumed := 0
 
-	start4 := A_TickCount 
-	Loop4:
-	loop{
-		if (resumed = 1){
-		break Loop4
-		}
-		if (battlecrash = 1){
-		break Loop4
-		}
-		PixelSearch, XX, YY, Loop4_Pixel_X-1, Loop4_Pixel_Y-1, Loop4_Pixel_X+1, Loop4_Pixel_Y+1, Loop4_Pixel_C, 4, Fast RGB
-		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop4_Pixel_X, Loop4_Pixel_Y, 1, 0
-		sleep 100
-		BlockInput, MouseMoveOff
-		break Loop4
-		}
-		now4 := A_TickCount-start4
-		if (now4 > Menu_Timeout*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
-		}
-		}
-		sleep 500
+	if(MenuPixelFinder(One_Yellow[1],One_Yellow[2],One_Yellow[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,1) == 1)
+		goto CrashHandle
 
-	start5 := A_TickCount 
-	Loop5:
-	loop{
-		if (resumed = 1){
-		break Loop5
-		}
-		if (battlecrash = 1){
-		break Loop5
-		}
-		PixelSearch, XX, YY, Loop5_Pixel_X-1, Loop5_Pixel_Y-1, Loop5_Pixel_X+1, Loop5_Pixel_Y+1, Loop5_Pixel_C, 4, Fast RGB
-		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		if(Use_RW = 0) {
-		MouseClick, Left, Loop5_Pixel_X, Loop5_Pixel_Y, 1, 0
-		}
-		sleep 100
-		BlockInput, MouseMoveOff
-		break Loop5
-		}
-		now5:= A_TickCount-start5
-		if (now5 > Menu_Timeout*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
-		}
-		}
-		sleep 500
-		
-		
-	start6 := A_TickCount 
-	Loop6:
-	loop{
-		if (resumed = 1){
-		break Loop6
-		}
-		if (battlecrash = 1){
-		break Loop6
-		}
-		PixelSearch, XX, YY, Loop6_Pixel_X-1, Loop6_Pixel_Y-1, Loop6_Pixel_X+1, Loop6_Pixel_Y+1, Loop6_Pixel_C, 4, Fast RGB
-		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop6_Pixel_X, Loop6_Pixel_Y, 1, 0
-		sleep 100
-		BlockInput, MouseMoveOff
-		break Loop6
-		}
-		now6:= A_TickCount-start6
-		if (now6 > Menu_Timeout*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
-		}
-		}
-		sleep 500
-		
-	start7 := A_TickCount 
-	Loop7:
-	loop{
-		battlecrash := 0
-		PixelSearch, XX, YY, Loop7_Pixel_X-4, Loop7_Pixel_Y-4, Loop7_Pixel_X+4, Loop7_Pixel_Y+4, Loop7_Pixel_C, 4, Fast RGB
-		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop7_Pixel_X, Loop7_Pixel_Y, 1, 0
-		sleep 100
-		BlockInput, MouseMoveOff
-		break Loop7
-		}
-		now7 := A_TickCount-start7
-		if (now7 > Menu_Timeout*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
-		}
-		}
-		sleep 500
-		
-	start8 := A_TickCount 
-	Loop8:
-	loop{
-		PixelSearch, ZZ, YY, Loop8_Pixel_X-1, Loop8_Pixel_Y-1, Loop8_Pixel_X+1, Loop8_Pixel_Y+1, Loop8_Pixel_O, 5, Fast RGB
-		if (ZZ != ""){
-		sleep 1000
-		MouseClick, Left, Loop8_Pixel_X_B, Loop8_Pixel_Y_B, 1, 0
-		Sleep 180000
-		Reload
-		}
-		PixelSearch, XX, YY, Loop8_Pixel_X-1, Loop8_Pixel_Y-1, Loop8_Pixel_X+1, Loop8_Pixel_Y+1, Loop8_Pixel_C, 8, Fast RGB
-		if (XX != ""){
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop8_Pixel_X, Loop8_Pixel_Y, 1, 0
-		BlockInput, MouseMoveOff
-		break Loop8
-		}
-		now8 := A_TickCount-start8
-		if (now8 > Menu_Timeout*1000  && Enable_Crash_Handle = 1){
-		Goto CrashHandle
-		}
-		}
-		sleep 500
-	
-	start9 := A_TickCount 
+	if(MenuPixelFinder(Battle_Blue[1],Battle_Blue[2],Battle_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+		goto CrashHandle
+
+
+	;Battle End Detection
+	start_timeout := A_TickCount 
 	findwhite := 0
-	Loop9:
+	Loop_BattleEnd:
 	loop{
 		resumed := 0
-		PixelSearch, XX, YY, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_X, Loop9_Pixel_Y, Loop9_Pixel_C, 1, Fast RGB
-		;tooltip, %findwhite%
+		pixelSearch, XX, YY, Corner_White[1], Corner_White[2], Corner_White[1], Corner_White[2], Corner_White[3], 1, Fast RGB
 		if (XX = ""){
-		findwhite := 0
+			findwhite := 0
 		}
 		if (XX != ""){
-		findwhite++
+			findwhite++
 		if (findwhite>20) {
-		sleep 400
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Loop10_Pixel_X, Loop10_Pixel_Y, 1, 0
-		BlockInput, MouseMoveOff
-		break Loop9
+			sleep Click_Timeout
+			BlockInput, MouseMove
+			sleep 100
+			MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+			BlockInput, MouseMoveOff
+			break Loop_BattleEnd
 		}
 		}
-		now9 := A_TickCount-start9
-		if (now9 > Battle_Timeout*60*1000 && Enable_Crash_Handle = 1){
-		Goto CrashHandle
+		now := A_TickCount-start_timeout
+		if (now > Battle_Timeout*60*1000 && Enable_Crash_Handle = 1){
+			Goto CrashHandle
 		}
-		}
-		sleep 250
+	}
+	sleep 250
 		
 	count2 = 0
-	LoopB:
+	Loop_AfterBattle:
 	loop{
-		PixelSearch, ZZ, YY, Loop10_Pixel_X, Loop10_Pixel_Y, Loop10_Pixel_X, Loop10_Pixel_Y, 0x000000, 1, Fast RGB
+		pixelSearch, ZZ, YY, Next_White[1], Next_White[2], Next_White[1], Next_White[2], Black_Loading_Screen_Colour, 1, Fast RGB
 		if (ZZ != ""){
-		break LoopB
+			break Loop_AfterBattle
 		}
 		count = 0
-		Loop10:
+		Loop_AfterBattleClicker:
 		loop{
-			PixelSearch, XX, YY, Loop10_Pixel_X-1, Loop10_Pixel_Y-1, Loop10_Pixel_X+1, Loop10_Pixel_Y+1, Loop10_Pixel_C, 2, Fast RGB
+			pixelSearch, XX, YY, Next_White[1]-1, Next_White[2]-1, Next_White[1]+1, Next_White[2]+1, Next_White[3], 2, Fast RGB
 			count++
 			if (XX !=""){
-			sleep 100
-			BlockInput, MouseMove
-			MouseClick, Left, Loop10_Pixel_X, Loop10_Pixel_Y, 1, 0
-			sleep 100
-			MouseClick, Left, Loop10_Pixel_X, Loop10_Pixel_Y, 1, 0
-			BlockInput, MouseMoveOff
-			break Loop10
+				sleep 100
+				BlockInput, MouseMove
+				MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+				sleep 100
+				MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+				BlockInput, MouseMoveOff
+				break Loop_AfterBattleClicker
 			}
 			count2++
 			} until count > 20
 		} until count2 > 400
-		sleep 750
-
+	sleep 750
 }
+
 CrashHandle:
 sleep 1000
-MouseClick, Left, Crash_Close_Pixel_X, Crash_Close_Pixel_Y, 1, 0
+MouseClick, Left, Crash_Close_pixel[1], Crash_Close_pixel[2], 1, 0
 sleep 1000
-MouseClick, Left, Crash_App_Launch_X, Crash_App_Launch_Y+25, 1, 0
+MouseClick, Left, Crash_App_Launch[1], Crash_App_Launch[2]+25, 1, 0
 sleep 1000
-start1 := A_TickCount
+start_timeout := A_TickCount
 LoopC1:
 Loop{
-	now1 := A_TickCount-start1
-	PixelSearch, XX, YY, Crash_App_Launch_X-25, Crash_App_Launch_Y-25, Crash_App_Launch_X+25, Crash_App_Launch_Y+25, 0xFFFFFF, 5, Fast RGB
+	now := A_TickCount-start_timeout
+	pixelSearch, XX, YY, Crash_App_Launch[1]-24, Crash_App_Launch[2]-24, Crash_App_Launch[1]+24, Crash_App_Launch[2]+24, Crash_App_Launch[3], 5, Fast RGB
 	if (XX != ""){
-	sleep 400
-	BlockInput, MouseMove
-	sleep 100
-	MouseClick, Left, Crash_App_Launch_X, Crash_App_Launch_Y, 1, 0
-	sleep 100
-	BlockInput, MouseMoveOff
-	break LoopC1
-		}
-	} until now1 > Menu_Timeout*1000
+		sleep click_timeout
+		BlockInput, MouseMove
+		sleep 100
+		MouseClick, Left, Crash_App_Launch[1], Crash_App_Launch[2], 1, 0
+		sleep 100
+		BlockInput, MouseMoveOff
+		break LoopC1
+	}
+} until now > Menu_Timeout*1000
 	
-start2 := A_TickCount 
+start_timeout := A_TickCount 
 LoopC2:
 Loop{
-	now2 := A_TickCount-start2
-	PixelSearch, XX, YY, Crash_Play_X-2, Crash_Play_Y-2, Crash_Play_X+2, Crash_Play_Y+2, Crash_Play_C, 2, Fast RGB
+	now := A_TickCount-start_timeout
+	pixelSearch, XX, YY, Crash_Play_Blue[1]-2, Crash_Play_Blue[2]-2, Crash_Play_Blue[1]+2, Crash_Play_Blue[2]+2, Crash_Play_Blue[3], 2, Fast RGB
 	if (XX != ""){
-	sleep 400
-	BlockInput, MouseMove
-	sleep 100
-	MouseClick, Left, Crash_Play_X, Crash_Play_Y, 1, 0
-	sleep 100
-	BlockInput, MouseMoveOff
-	break LoopC2
-		}
-	} until now2 > Menu_Timeout*1000
+		sleep click_timeout
+		BlockInput, MouseMove
+		sleep 100
+		MouseClick, Left, Crash_Play_Blue[1], Crash_Play_Blue[2], 1, 0
+		sleep 100
+		BlockInput, MouseMoveOff
+		break LoopC2
+	}
+} until now > Menu_Timeout*1000
 
 resumed := 0
 
-start3 := A_TickCount
+start_timeout := A_TickCount
 LoopC3:
 Loop{
-	now3 := A_TickCount-start3
-	PixelSearch, XX, YY, Crash_Cancel_X-2, Crash_Cancel_Y-2, Crash_Cancel_X+2, Crash_Cancel_Y+2, Crash_Cancel_C, 2, Fast RGB
+	now := A_TickCount-start_timeout
+	pixelSearch, XX, YY, Crash_Cancel_Brown[1]-2, Crash_Cancel_Brown[2]-2, Crash_Cancel_Brown[1]+2, Crash_Cancel_Brown[2]+2, Crash_Cancel_Brown[3], 2, Fast RGB
 	if (XX != ""){
-	sleep 400
-	BlockInput, MouseMove
-	sleep 100
-	MouseClick, Left, Crash_Cancel_X, Crash_Cancel_Y, 1, 0
-	sleep 100
-	BlockInput, MouseMoveOff
-	resumed := 1
-	break LoopC3
-		}
-	} until now3 > 10000
+		sleep click_timeout
+		BlockInput, MouseMove
+		sleep 100
+		MouseClick, Left, Crash_Cancel_Brown[1], Crash_Cancel_Brown[2], 1, 0
+		sleep 100
+		BlockInput, MouseMoveOff
+		resumed := 1
+		break LoopC3
+	}
+} until now > 10000
 
-start4 := A_TickCount
+start_timeout := A_TickCount
 LoopC4:
 Loop{
 	if (resumed = 1){
-	break LoopC4
+		break LoopC4
 	}
-	now4 := A_TickCount-start4
-	PixelSearch, XX, YY, Crash_Home_Screen_X-2, Crash_Home_Screen_Y-2, Crash_Home_Screen_X+2, Crash_Home_Screen_Y+2, Crash_Home_Screen_C, 6, Fast RGB
-	if (XX != ""){
-	sleep 400
-	BlockInput, MouseMove
-	sleep 100
-	MouseClick, Left, Crash_Home_Screen_X, Crash_Home_Screen_Y, 1, 0
-	sleep 100
-	BlockInput, MouseMoveOff
 
-	break LoopC4
+	now := A_TickCount-start_timeout
+	pixelSearch, XX, YY, Crash_Home_Screen_Yellow[1]-2, Crash_Home_Screen_Yellow[2]-2, Crash_Home_Screen_Yellow[1]+2, Crash_Home_Screen_Yellow[2]+2, Crash_Home_Screen_Yellow[3], 6, Fast RGB
+	if (XX != ""){
+		sleep click_timeout
+		BlockInput, MouseMove
+		sleep 100
+		MouseClick, Left, Crash_Home_Screen_Yellow[1], Crash_Home_Screen_Yellow[2], 1, 0
+		sleep 100
+		BlockInput, MouseMoveOff
+		break LoopC4
 	}
 	
-	PixelSearch, XX, YY, Crash_Event_Battle_X-2, Crash_Event_Battle_Y-2, Crash_Event_Battle_X+2, Crash_Event_Battle_Y+2, Crash_Event_Battle_C, 6, Fast RGB
+	pixelSearch, XX, YY, Crash_Event_Battle_Yellow[1]-2, Crash_Event_Battle_Yellow[2]-2, Crash_Event_Battle_Yellow[1]+2, Crash_Event_Battle_Yellow[2]+2, Crash_Event_Battle_Yellow[3], 6, Fast RGB
 	if (XX != ""){
-	battlecrash := 1
-	sleep 400
-	BlockInput, MouseMove
-	sleep 100
-	MouseClick, Left, Crash_Event_Battle_X, Crash_Event_Battle_Y, 1, 0
-	sleep 100
-	BlockInput, MouseMoveOff
-
-	break LoopC4
+		battle_crash := 1
+		sleep click_timeout
+		BlockInput, MouseMove
+		sleep 100
+		MouseClick, Left, Crash_Event_Battle_Yellow[1], Crash_Event_Battle_Yellow[2], 1, 0
+		sleep 100
+		BlockInput, MouseMoveOff
+		break LoopC4
 	}
-	} until now4 > Menu_Timeout*1000
+} until now > Menu_Timeout*1000
 
-start5 := A_TickCount
+start_timeout := A_TickCount
 LoopC5:
 Loop{
 	if (resumed = 1){
-	break LoopC5
+		break LoopC5
 	}
-	if (battlecrash = 1){
-	break LoopC5
+	if (battle_crash = 1){
+		break LoopC5
 	}
-	
-	now5 := A_TickCount-start5
-	PixelSearch, XX, YY, Crash_Raid_Dungeons_X-2, Crash_Raid_Dungeons_Y-2, Crash_Raid_Dungeons_X+2, Crash_Raid_Dungeons_Y+2, Crash_Raid_Dungeons_C, 6, Fast RGB
+
+	now := A_TickCount-start_timeout
+	pixelSearch, XX, YY, Crash_Raid_Dungeons_White[1]-2, Crash_Raid_Dungeons_White[2]-2, Crash_Raid_Dungeons_White[1]+2, Crash_Raid_Dungeons_White[2]+2, Crash_Raid_Dungeons_White[3], 6, Fast RGB
 	if (XX != ""){
-	sleep 400
+	sleep click_timeout
 	BlockInput, MouseMove
 	sleep 100
-	MouseClick, Left, Crash_Raid_Dungeons_X, Crash_Raid_Dungeons_Y, 1, 0
+	MouseClick, Left, Crash_Raid_Dungeons_White[1], Crash_Raid_Dungeons_White[2], 1, 0
 	sleep 100
 	BlockInput, MouseMoveOff
-
 	break LoopC5
 	}
-	} until now5 > Menu_Timeout*1000
+} until now > Menu_Timeout*1000
 	
 	
-start6 := A_TickCount
+start_timeout := A_TickCount
 LoopC6:
 Loop{
 	if (resumed = 1){
-	break LoopC6
+		break LoopC6
 	}
-	if (battlecrash = 1){
-	break LoopC6
+	if (battle_crash = 1){
+		break LoopC6
 	}
-	now6 := A_TickCount-start6
-	PixelSearch, XX, YY, Crash_Event_Dungeons_X-2, Crash_Event_Dungeons_Y-2, Crash_Event_Dungeons_X+2, Crash_Event_Dungeons_Y+2, Crash_Event_Dungeons_C, 6, Fast RGB
-	if (XX != ""){
-	sleep 400
-	BlockInput, MouseMove
-	sleep 100
-	MouseClick, Left, Crash_Farm_X, Crash_Farm_Y, 1, 0
-	sleep 100
-	BlockInput, MouseMoveOff
 
-	break LoopC6
+	now := A_TickCount-start_timeout
+	pixelSearch, XX, YY, Crash_Event_Dungeons_Green[1]-2, Crash_Event_Dungeons_Green[2]-2, Crash_Event_Dungeons_Green[1]+2, Crash_Event_Dungeons_Green[2]+2, Crash_Event_Dungeons_Green[3], 6, Fast RGB
+	if (XX != ""){
+		sleep click_timeout
+		BlockInput, MouseMove
+		sleep 100
+		MouseClick, Left, Crash_Farm_Dungeon[1], Crash_Farm_Dungeon[2], 1, 0
+		sleep 100
+		BlockInput, MouseMoveOff
+		break LoopC6
 	}
-	} until now6 > Menu_Timeout*1000
+} until now > Menu_Timeout*1000
 	
-Goto Loop0
+Goto Main_Loop
 
 ^Space::ExitApp

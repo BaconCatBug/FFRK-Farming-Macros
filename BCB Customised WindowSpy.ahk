@@ -9,20 +9,20 @@ SetWorkingDir, %A_ScriptDir%
 SetBatchLines, -1
 CoordMode, Pixel, Screen
 
-txtNotFrozen := "(Hold Ctrl or Shift to suspend updates)"
-txtFrozen := "(Updates suspended)"
+txtNotFrozen := "(Hold Ctrl to suspend updates)"
+txtFrozen := "(Press Control+B to copy mouse SCREEN position information)"
 txtMouseCtrl := "Control Under Mouse Position"
 txtFocusCtrl := "Focused Control"
 
 Gui, New, hwndhGui AlwaysOnTop Resize MinSize
 
-Gui, Add, Text,, Window Title, Class and Process:
-Gui, Add, Checkbox, yp xp+200 w120 Right vCtrl_FollowMouse, Follow Mouse
-Gui, Add, Edit, xm w320 r4 ReadOnly -Wrap vCtrl_Title
+;Gui, Add, Text,, Window Title, Class and Process:
+;Gui, Add, Checkbox, yp xp+200 w120 Right vCtrl_FollowMouse, Follow Mouse
+;Gui, Add, Edit, xm w320 r4 ReadOnly -Wrap vCtrl_Title
 Gui, Add, Text,, Pixel Information
 Gui, Add, Edit, w320 r4 ReadOnly vCtrl_MousePos
 Gui, Add, Text, w320 r1 vCtrl_Freeze, % txtNotFrozen
-Gui, Show, NoActivate, BaconCatBug's Customised Pixel Information Tool
+Gui, Show, NoActivate, BaconCatBug`'s Customised Pixel Information Tool
 
 GetClientSize(hGui, temp)
 horzMargin := temp*96//A_ScreenDPI - 320
@@ -74,7 +74,7 @@ CoordMode, Mouse, Client
 MouseGetPos, mcX, mcY
 PixelGetColor, mClr, %msX%, %msY%, RGB
 mClr := "0x" . SubStr(mClr, 3)
-UpdateText("Ctrl_MousePos", "Screen:`t" msX ", " msY " (less often used)`nWindow:`t" mrX ", " mrY " (default)`nClient:`t" mcX ", " mcY " (recommended)"
+UpdateText("Ctrl_MousePos", "Screen:`t" msX ", " msY " (used for the farming scripts)`nWindow:`t" mrX ", " mrY " (default)`nClient:`t" mcX ", " mcY " (recommended)"
 	. "`nColor:`t" mClr " (Red=" SubStr(mClr, 3, 2) " Green=" SubStr(mClr, 5, 2) " Blue=" SubStr(mClr, 7) ")")
 UpdateText("Ctrl_CtrlLabel", (Ctrl_FollowMouse ? txtMouseCtrl : txtFocusCtrl) ":")
 if (curCtrl)
@@ -200,4 +200,8 @@ return
 ~*Ctrl up::
 ~*Shift up::
 SetTimer, Update, On
+return
+
+^B::
+clipboard := "[" . msX . "," . msY . "," . mClr . "]"
 return
