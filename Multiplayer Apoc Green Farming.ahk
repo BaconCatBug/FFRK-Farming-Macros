@@ -11,7 +11,7 @@ CoordMode, Mouse, Screen
 
 ;The amount of time, in minutes, you want the script to wait while in the battle before it decides something has gone wrong and triggers the crash handling.
 ;(Default := 5)
-Battle_Timeout := 5
+Battle_Timeout := 4
 
 ;The amount of time, in seconds, you want the script to wait in menus before it decides something has gone wrong and triggers the crash handling.
 ;(Default := 30)
