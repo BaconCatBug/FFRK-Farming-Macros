@@ -22,32 +22,32 @@ Menu_Timeout := 30
 ;(Default := 350)
 Click_Timeout := 350
 
-;A Purple pixel on the top right corner of the "(Apocalypse +)" dungeon button.
+;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
 Apocalypse_Purple := [1802,513,0x270625]
 
-;A Blue pixel on the "Enter Dungeon" button.
+;A BLUE pixel on the "Enter Dungeon" button.
 Enter_Dungeon_Blue := [1792,955,0x0D2ECC]
 
-;A Brown pixel on the "Solo Raid" button.
+;A BROWN pixel on the "Solo Raid" button.
 Solo_Raid_Brown := [1324,587,0x4B1F0F]
 
-;A White pixel on the "Next" button.
+;A BLUE pixel on the "Next" button.
 Next_Blue := [1631,959,0x0725B4]
 
-;A Brown pixel on the "Remove" button of the first Roaming Warrior.
+;A BROWN pixel on the "Remove" button of the first Roaming Warrior.
 ;This script is intended for farming, if you need to rely on Cloud USB1 this script isn't for you.
 ;If you really want to use the top RW, change the "Use_RW" variable to 1
 Remove_Brown := [1822,502,0x582612]
 Use_RW := 0
 
-;A Blue pixel on the "GO!" button.
+;A BLUE pixel on the "GO!" button.
 Go_Blue := [1627,952,0x1238D2]
 
-;A Yellow pixel on the "1" underneath the word "Stamina".
+;A YELLOW pixel on the "1" underneath the word "Stamina".
 ;Searches a 50x50 box on the specified pixel.
 One_Yellow := [1524,510,0xFFDD8E]
 
-;A Blue pixel directly above the first "t" in "Begin Battle".
+;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
 Battle_Blue := [1718,658,0x1F76E2]
@@ -86,6 +86,7 @@ Crash_Close_pixel := [1480,7,0x0DC5A0]
 ;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
+;Searches a 50x50 box on the specified pixel.
 Crash_App_Launch := [1801,338,0xFFFFFF]
 
 ;A BLUE pixel on the blue "Play" button when FFRK launches.
@@ -185,17 +186,17 @@ loop{
 
 	;Battle End Detection
 	start_timeout := A_TickCount 
-	findwhite := 0
+	find_white := 0
 	Loop_BattleEnd:
 	loop{
 		resumed := 0
 		pixelSearch, XX, YY, Corner_White[1], Corner_White[2], Corner_White[1], Corner_White[2], Corner_White[3], 1, Fast RGB
 		if (XX = ""){
-			findwhite := 0
+			find_white := 0
 		}
 		if (XX != ""){
-			findwhite++
-		if (findwhite>20) {
+			find_white++
+		if (find_white>20) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
