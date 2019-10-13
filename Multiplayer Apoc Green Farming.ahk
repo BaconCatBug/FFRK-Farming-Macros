@@ -18,7 +18,7 @@ Battle_Timeout := 4
 Menu_Timeout := 30
 
 ;The amount of time, in milliseconds, the script will wait between finding a pixel and clicking.
-;Due to FFRK's habit of drawing menus before they are clickable, setting this bellow 400ms will generally result in the script stalling, but you can tweak it to your pleasure.
+;Due to FFRK's habit of drawing menus before they are clickable, setting this bellow 350ms will generally result in the script stalling, if the default causes stalling increase until it stops stalling.
 ;(Default := 350)
 Click_Timeout := 350
 
