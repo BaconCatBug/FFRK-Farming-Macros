@@ -110,7 +110,7 @@ Crash_Raid_Dungeons_White := [1719,98,0xFCFEFE]
 Crash_Event_Dungeons_Green := [1764,98,0x89E810]
 
 ;Any pixel on the banner of the event you are farming.
-Crash_Farm_Dungeon := [1601,475,0x9D16CB]
+Crash_Farm_Dungeon := [1541,475,0xFED735]
 
 ;*******************************************************************;
 ;**Do not edit below this line unless you know what you are doing.**;
@@ -121,13 +121,7 @@ Crash_Farm_Dungeon := [1601,475,0x9D16CB]
 MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,battle_timeout,resumed:=0,battle_crash:=0,expanded:=0,use_rw:=0) {
 	timeout_start := A_TickCount
 	loop{
-		if (resumed == 1){
-			return 0
-		}
-		if (battle_crash == 1){
-			return 0
-		}
-		if (use_rw == 1){
+		if (resumed || battle_crash || use_rw){
 			return 0
 		}
 		if(expanded == 0){
