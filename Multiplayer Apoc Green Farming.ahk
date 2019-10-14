@@ -118,13 +118,16 @@ Crash_Farm_Dungeon := [1601,475,0x9D16CB]
 ;*******************************************************************;
 
 ;Define MenuPixelFinder
-MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,battle_timeout,resumed:=0,battle_crash:=0,expanded:=0) {
+MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,battle_timeout,resumed:=0,battle_crash:=0,expanded:=0,use_rw:=0) {
 	timeout_start := A_TickCount
 	loop{
 		if (resumed == 1){
 			return 0
 		}
 		if (battle_crash == 1){
+			return 0
+		}
+		if (use_rw == 1){
 			return 0
 		}
 		if(expanded == 0){
@@ -167,7 +170,7 @@ loop{
 		goto CrashHandle
 		
 	sleep click_timeout
-	if(MenuPixelFinder(Remove_Brown[1],Remove_Brown[2],Remove_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+	if(MenuPixelFinder(Remove_Brown[1],Remove_Brown[2],Remove_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,Use_RW) == 1)
 		goto CrashHandle
 		
 	sleep click_timeout
