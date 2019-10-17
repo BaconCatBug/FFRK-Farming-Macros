@@ -62,10 +62,11 @@ Battle_Orange := 0xDE701E
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
 Back_Blue := [1526,841,0x02186E]
 
-;A WHITE pixel in the bottom right corner border of the Battle Results Screen (the one with the Champion Rainbow bar, so it detects the end of the battle).
+;WHITE pixels in the left, middle and right border of the Battle Results Screen (the one with the Champion Rainbow bar, so it detects the end of the battle and prevents misclicks ending auto mode).
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
-;Searches a 50x50 box on the specified pixel.
-Corner_White := [1865,986,0xFFFFFF]
+Left_White := [1245,902,0xFFFFFF]
+Middle_White := [1558,997,0xFFFFFF]
+Right_White := [1865,904,0xFFFFFF]
 
 ;A WHITE pixel in the "Next" button text after the battle is won, will be used for all the next buttons.
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
@@ -81,7 +82,7 @@ Black_Loading_Screen_Colour := 0x000000
 Enable_Crash_Handle := 1
 
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_pixel := [1480,7,0x0DC5A0]
+Crash_Close_Pixel := [1480,7,0x0DC5A0]
 
 ;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
@@ -183,17 +184,19 @@ loop{
 
 	;Battle End Detection
 	start_timeout := A_TickCount 
-	find_white := 0
+	find_white_left := 0
+	find_white_middle := 0
+	find_white_right := 0
 	Loop_BattleEnd:
 	loop{
 		resumed := 0
-		pixelSearch, XX, YY, Corner_White[1], Corner_White[2], Corner_White[1], Corner_White[2], Corner_White[3], 1, Fast RGB
+		pixelSearch, XX, YY, Right_White[1]-5, Right_White[2]-5, Right_White[1]+5, Right_White[2]+5, Right_White[3], 1, Fast RGB
 		if (XX = ""){
-			find_white := 0
+			find_white_right := 0
 		}
 		if (XX != ""){
-			find_white++
-		if (find_white>20) {
+			find_white_right++
+		if (find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -202,6 +205,39 @@ loop{
 			break Loop_BattleEnd
 		}
 		}
+		
+		pixelSearch, XX, YY, Left_White[1]-5, Left_White[2]-5, Left_White[1]+5, Left_White[2]+5, Left_White[3], 1, Fast RGB
+		if (XX = ""){
+			find_white_left := 0
+		}
+		if (XX != ""){
+			find_white_left++
+		if (find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+			sleep Click_Timeout
+			BlockInput, MouseMove
+			sleep 100
+			MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+			BlockInput, MouseMoveOff
+			break Loop_BattleEnd
+		}
+		}
+		
+		pixelSearch, XX, YY, Middle_White[1]-5, Middle_White[2]-5, Middle_White[1]+5, Middle_White[2]+5, Middle_White[3], 1, Fast RGB
+		if (XX = ""){
+			find_white_middle := 0
+		}
+		if (XX != ""){
+			find_white_middle++
+		if (find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+			sleep Click_Timeout
+			BlockInput, MouseMove
+			sleep 100
+			MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+			BlockInput, MouseMoveOff
+			break Loop_BattleEnd
+		}
+		}
+		
 		now := A_TickCount-start_timeout
 		if (now > Battle_Timeout*60*1000 && Enable_Crash_Handle = 1){
 			Goto CrashHandle
@@ -238,7 +274,7 @@ loop{
 
 CrashHandle:
 sleep 1000
-MouseClick, Left, Crash_Close_pixel[1], Crash_Close_pixel[2], 1, 0
+MouseClick, Left, Crash_Close_Pixel[1], Crash_Close_Pixel[2], 1, 0
 sleep 1000
 MouseClick, Left, Crash_App_Launch[1], Crash_App_Launch[2]+25, 1, 0
 sleep 1000
