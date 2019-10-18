@@ -11,7 +11,7 @@ CoordMode, Mouse, Screen
 
 ;The amount of time, in minutes, you want the script to wait while in the battle before it decides something has gone wrong and triggers the crash handling.
 ;(Default := 5)
-Battle_Timeout := 4
+Battle_Timeout := 5
 
 ;The amount of time, in seconds, you want the script to wait in menus before it decides something has gone wrong and triggers the crash handling.
 ;(Default := 30)
@@ -81,6 +81,9 @@ Black_Loading_Screen_Colour := 0x000000
 ;However, since this relies on exact positioning, the emulator needs to be at the same position each time.
 Enable_Crash_Handle := 1
 
+;This will cause the crash handling to go back and try the next dungeon down for when events add a new MP dungeon if it stalls on finding the Apocalypse_Purple pixel
+Enable_Primitive_Event_Update_Handling := 1
+
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
 Crash_Close_Pixel := [1480,7,0x0DC5A0]
 
@@ -110,8 +113,19 @@ Crash_Raid_Dungeons_White := [1719,98,0xFCFEFE]
 ;A GREEN pixel on the green hair of the Bartz lookalike in the "Event Dungeons" button.
 Crash_Event_Dungeons_Green := [1764,98,0x89E810]
 
-;Any pixel on the banner of the event you are farming.
-Crash_Farm_Dungeon := [1541,475,0xFED735]
+
+;A BROWN pixel on the rounded "Back" button on the Raid Dungeons screen.
+Crash_Raid_Dungeons_Brown := [1289,974,0x663114]
+
+;The position of the event dungeon banner you wish to farm, 1 being the top banner.
+;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
+Crash_Farm_Dungeons_Selection := 2
+
+;Any pixel of each of the event dungeon banners, from top to bottom.
+Crash_Farm_Dungeon_1 := [1341,282,0xB15A03]
+Crash_Farm_Dungeon_2 := [1340,469,0x201011]
+Crash_Farm_Dungeon_3 := [1344,661,0x23221F]
+Crash_Farm_Dungeon_4 := [1384,859,0x7C2F07]
 
 ;*******************************************************************;
 ;**Do not edit below this line unless you know what you are doing.**;
@@ -149,36 +163,38 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 ;Menu clickings
 Main_Loop:
 loop{
-	if(MenuPixelFinder(Apocalypse_Purple[1],Apocalypse_Purple[2],Apocalypse_Purple[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+	if(MenuPixelFinder(Apocalypse_Purple[1],Apocalypse_Purple[2],Apocalypse_Purple[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1) {
+		possible_new_event++
+		goto CrashHandle
+		}
+		
+	sleep click_timeout
+	if(MenuPixelFinder(Enter_Dungeon_Blue[1],Enter_Dungeon_Blue[2],Enter_Dungeon_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 		
 	sleep click_timeout
-	if(MenuPixelFinder(Enter_Dungeon_Blue[1],Enter_Dungeon_Blue[2],Enter_Dungeon_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+	if(MenuPixelFinder(Solo_Raid_Brown[1],Solo_Raid_Brown[2],Solo_Raid_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 		
 	sleep click_timeout
-	if(MenuPixelFinder(Solo_Raid_Brown[1],Solo_Raid_Brown[2],Solo_Raid_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+	if(MenuPixelFinder(Next_Blue[1],Next_Blue[2],Next_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 		
 	sleep click_timeout
-	if(MenuPixelFinder(Next_Blue[1],Next_Blue[2],Next_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+	if(MenuPixelFinder(Remove_Brown[1],Remove_Brown[2],Remove_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,Use_RW) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 		
 	sleep click_timeout
-	if(MenuPixelFinder(Remove_Brown[1],Remove_Brown[2],Remove_Brown[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,Use_RW) == 1)
-		goto CrashHandle
-		
-	sleep click_timeout
-	if(MenuPixelFinder(Go_Blue[1],Go_Blue[2],Go_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+	if(MenuPixelFinder(Go_Blue[1],Go_Blue[2],Go_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 		
 	battle_crash := 0
 	resumed := 0
 
-	if(MenuPixelFinder(One_Yellow[1],One_Yellow[2],One_Yellow[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,1) == 1)
+	if(MenuPixelFinder(One_Yellow[1],One_Yellow[2],One_Yellow[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,1) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 
-	if(MenuPixelFinder(Battle_Blue[1],Battle_Blue[2],Battle_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1)
+	if(MenuPixelFinder(Battle_Blue[1],Battle_Blue[2],Battle_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 
 
@@ -384,7 +400,20 @@ Loop{
 	}
 } until now > Menu_Timeout*1000
 	
-	
+if (possible_new_event == 2){
+	Crash_Farm_Dungeons_Selection++
+}
+		
+if (Crash_Farm_Dungeons_Selection) == 2 {
+	crash_farm_selected := Crash_Farm_Dungeon_2
+} else if (Crash_Farm_Dungeons_Selection) == 3 {
+	crash_farm_selected := Crash_Farm_Dungeon_3
+} else if (Crash_Farm_Dungeons_Selection) == 4 {
+	crash_farm_selected := Crash_Farm_Dungeon_4
+} else {
+	crash_farm_selected := Crash_Farm_Dungeon_1
+}
+
 start_timeout := A_TickCount
 LoopC6:
 Loop{
@@ -401,7 +430,7 @@ Loop{
 		sleep click_timeout
 		BlockInput, MouseMove
 		sleep 100
-		MouseClick, Left, Crash_Farm_Dungeon[1], Crash_Farm_Dungeon[2], 1, 0
+		MouseClick, Left, crash_farm_selected[1], crash_farm_selected[2], 1, 0
 		sleep 100
 		BlockInput, MouseMoveOff
 		break LoopC6
