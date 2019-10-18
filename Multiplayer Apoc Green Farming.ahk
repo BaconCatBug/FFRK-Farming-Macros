@@ -74,7 +74,9 @@ Right_White := [1865,904,0xFFFFFF]
 Next_White := [1543,921,0xFFFFFF]
 Black_Loading_Screen_Colour := 0x000000
 
-;Crash Handling
+;************************;
+;*****Crash Handling*****;
+;************************;
 ;This will enable the macro to recover for when (yes, when) FFRK crashes.
 ;It can handle either the infinite black loading screen or a total crash to home screen.
 ;This only works for emulators with a tab-like switcher at the top of the screen, like MeMu.
@@ -119,7 +121,7 @@ Crash_Raid_Dungeons_Brown := [1289,974,0x663114]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
-Crash_Farm_Dungeons_Selection := 2
+Crash_Farm_Dungeons_Selection := 1
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
 Crash_Farm_Dungeon_1 := [1341,282,0xB15A03]
@@ -136,7 +138,7 @@ Crash_Farm_Dungeon_4 := [1384,859,0x7C2F07]
 MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,battle_timeout,resumed:=0,battle_crash:=0,expanded:=0,use_rw:=0) {
 	timeout_start := A_TickCount
 	loop{
-		if (resumed || battle_crash || use_rw){
+		if(resumed || battle_crash || use_rw){
 			return 0
 		}
 		if(expanded == 0){
@@ -144,7 +146,7 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 		} else {
 		pixelSearch, XX, YY, posX-24, posY-24, posX+24, posY+24, colour_value, 5, Fast RGB
 		}
-		if (XX != ""){
+		if(XX != ""){
 			sleep click_timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -154,7 +156,7 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 			return 0
 		}
 		now := A_TickCount-timeout_start
-		if (now > menu_timeout*1000 && crash_handle == 1){
+		if(now > menu_timeout*1000 && crash_handle == 1){
 			return 1
 		}
 	}
@@ -164,8 +166,12 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 Main_Loop:
 loop{
 	if(MenuPixelFinder(Apocalypse_Purple[1],Apocalypse_Purple[2],Apocalypse_Purple[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1) {
-		possible_new_event++
+		if(Enable_Primitive_Event_Update_Handling == 1 && possible_new_event < 10){
+			possible_new_event++
+		}
 		goto CrashHandle
+		} else {
+			possible_new_event := 0
 		}
 		
 	sleep click_timeout
@@ -207,12 +213,12 @@ loop{
 	loop{
 		resumed := 0
 		pixelSearch, XX, YY, Right_White[1]-5, Right_White[2]-5, Right_White[1]+5, Right_White[2]+5, Right_White[3], 1, Fast RGB
-		if (XX = ""){
+		if(XX = ""){
 			find_white_right := 0
 		}
-		if (XX != ""){
+		if(XX != ""){
 			find_white_right++
-		if (find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+		if(find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -223,12 +229,12 @@ loop{
 		}
 		
 		pixelSearch, XX, YY, Left_White[1]-5, Left_White[2]-5, Left_White[1]+5, Left_White[2]+5, Left_White[3], 1, Fast RGB
-		if (XX = ""){
+		if(XX = ""){
 			find_white_left := 0
 		}
-		if (XX != ""){
+		if(XX != ""){
 			find_white_left++
-		if (find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+		if(find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -239,12 +245,12 @@ loop{
 		}
 		
 		pixelSearch, XX, YY, Middle_White[1]-5, Middle_White[2]-5, Middle_White[1]+5, Middle_White[2]+5, Middle_White[3], 1, Fast RGB
-		if (XX = ""){
+		if(XX = ""){
 			find_white_middle := 0
 		}
-		if (XX != ""){
+		if(XX != ""){
 			find_white_middle++
-		if (find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+		if(find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -255,7 +261,7 @@ loop{
 		}
 		
 		now := A_TickCount-start_timeout
-		if (now > Battle_Timeout*60*1000 && Enable_Crash_Handle = 1){
+		if(now > Battle_Timeout*60*1000 && Enable_Crash_Handle = 1){
 			Goto CrashHandle
 		}
 	}
@@ -265,7 +271,7 @@ loop{
 	Loop_AfterBattle:
 	loop{
 		pixelSearch, ZZ, YY, Next_White[1], Next_White[2], Next_White[1], Next_White[2], Black_Loading_Screen_Colour, 1, Fast RGB
-		if (ZZ != ""){
+		if(ZZ != ""){
 			break Loop_AfterBattle
 		}
 		count = 0
@@ -273,7 +279,7 @@ loop{
 		loop{
 			pixelSearch, XX, YY, Next_White[1]-1, Next_White[2]-1, Next_White[1]+1, Next_White[2]+1, Next_White[3], 2, Fast RGB
 			count++
-			if (XX !=""){
+			if(XX !=""){
 				sleep 100
 				BlockInput, MouseMove
 				MouseClick, Left, Next_White[1], Next_White[2], 1, 0
@@ -299,7 +305,7 @@ LoopC1:
 Loop{
 	now := A_TickCount-start_timeout
 	pixelSearch, XX, YY, Crash_App_Launch[1]-24, Crash_App_Launch[2]-24, Crash_App_Launch[1]+24, Crash_App_Launch[2]+24, Crash_App_Launch[3], 5, Fast RGB
-	if (XX != ""){
+	if(XX != ""){
 		sleep click_timeout
 		BlockInput, MouseMove
 		sleep 100
@@ -315,7 +321,7 @@ LoopC2:
 Loop{
 	now := A_TickCount-start_timeout
 	pixelSearch, XX, YY, Crash_Play_Blue[1]-2, Crash_Play_Blue[2]-2, Crash_Play_Blue[1]+2, Crash_Play_Blue[2]+2, Crash_Play_Blue[3], 2, Fast RGB
-	if (XX != ""){
+	if(XX != ""){
 		sleep click_timeout
 		BlockInput, MouseMove
 		sleep 100
@@ -333,7 +339,7 @@ LoopC3:
 Loop{
 	now := A_TickCount-start_timeout
 	pixelSearch, XX, YY, Crash_Cancel_Brown[1]-2, Crash_Cancel_Brown[2]-2, Crash_Cancel_Brown[1]+2, Crash_Cancel_Brown[2]+2, Crash_Cancel_Brown[3], 2, Fast RGB
-	if (XX != ""){
+	if(XX != ""){
 		sleep click_timeout
 		BlockInput, MouseMove
 		sleep 100
@@ -348,13 +354,13 @@ Loop{
 start_timeout := A_TickCount
 LoopC4:
 Loop{
-	if (resumed = 1){
+	if(resumed = 1){
 		break LoopC4
 	}
 
 	now := A_TickCount-start_timeout
 	pixelSearch, XX, YY, Crash_Home_Screen_Yellow[1]-2, Crash_Home_Screen_Yellow[2]-2, Crash_Home_Screen_Yellow[1]+2, Crash_Home_Screen_Yellow[2]+2, Crash_Home_Screen_Yellow[3], 6, Fast RGB
-	if (XX != ""){
+	if(XX != ""){
 		sleep click_timeout
 		BlockInput, MouseMove
 		sleep 100
@@ -365,7 +371,7 @@ Loop{
 	}
 	
 	pixelSearch, XX, YY, Crash_Event_Battle_Yellow[1]-2, Crash_Event_Battle_Yellow[2]-2, Crash_Event_Battle_Yellow[1]+2, Crash_Event_Battle_Yellow[2]+2, Crash_Event_Battle_Yellow[3], 6, Fast RGB
-	if (XX != ""){
+	if(XX != ""){
 		battle_crash := 1
 		sleep click_timeout
 		BlockInput, MouseMove
@@ -380,16 +386,16 @@ Loop{
 start_timeout := A_TickCount
 LoopC5:
 Loop{
-	if (resumed = 1){
+	if(resumed = 1){
 		break LoopC5
 	}
-	if (battle_crash = 1){
+	if(battle_crash = 1){
 		break LoopC5
 	}
 
 	now := A_TickCount-start_timeout
 	pixelSearch, XX, YY, Crash_Raid_Dungeons_White[1]-2, Crash_Raid_Dungeons_White[2]-2, Crash_Raid_Dungeons_White[1]+2, Crash_Raid_Dungeons_White[2]+2, Crash_Raid_Dungeons_White[3], 6, Fast RGB
-	if (XX != ""){
+	if(XX != ""){
 	sleep click_timeout
 	BlockInput, MouseMove
 	sleep 100
@@ -400,15 +406,15 @@ Loop{
 	}
 } until now > Menu_Timeout*1000
 	
-if (possible_new_event == 2){
+if(possible_new_event > 2){
 	Crash_Farm_Dungeons_Selection++
 }
 		
-if (Crash_Farm_Dungeons_Selection) == 2 {
+if(Crash_Farm_Dungeons_Selection) == 2 {
 	crash_farm_selected := Crash_Farm_Dungeon_2
-} else if (Crash_Farm_Dungeons_Selection) == 3 {
+} else if(Crash_Farm_Dungeons_Selection) == 3 {
 	crash_farm_selected := Crash_Farm_Dungeon_3
-} else if (Crash_Farm_Dungeons_Selection) == 4 {
+} else if(Crash_Farm_Dungeons_Selection) == 4 {
 	crash_farm_selected := Crash_Farm_Dungeon_4
 } else {
 	crash_farm_selected := Crash_Farm_Dungeon_1
@@ -417,16 +423,16 @@ if (Crash_Farm_Dungeons_Selection) == 2 {
 start_timeout := A_TickCount
 LoopC6:
 Loop{
-	if (resumed = 1){
+	if(resumed = 1){
 		break LoopC6
 	}
-	if (battle_crash = 1){
+	if(battle_crash = 1){
 		break LoopC6
 	}
 
 	now := A_TickCount-start_timeout
 	pixelSearch, XX, YY, Crash_Event_Dungeons_Green[1]-2, Crash_Event_Dungeons_Green[2]-2, Crash_Event_Dungeons_Green[1]+2, Crash_Event_Dungeons_Green[2]+2, Crash_Event_Dungeons_Green[3], 6, Fast RGB
-	if (XX != ""){
+	if(XX != ""){
 		sleep click_timeout
 		BlockInput, MouseMove
 		sleep 100
