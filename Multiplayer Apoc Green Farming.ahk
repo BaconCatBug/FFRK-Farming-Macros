@@ -62,7 +62,7 @@ Battle_Orange := 0xDE701E
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
 Back_Blue := [1526,841,0x02186E]
 
-;WHITE pixels in the left, middle and right border of the Battle Results Screen (the one with the Champion Rainbow bar, so it detects the end of the battle and prevents misclicks ending auto mode).
+;WHITE pixels in the left, middle and right border of the Battle Results Screen (the one with the Champion Rainbow bar, so it detects the end of the battle and prevents missclicks ending auto mode).
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
 Left_White := [1245,902,0xFFFFFF]
 Middle_White := [1558,997,0xFFFFFF]
@@ -121,7 +121,7 @@ Crash_Raid_Dungeons_Brown := [1289,974,0x663114]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
-Crash_Farm_Dungeons_Selection := 1
+Crash_Farm_Dungeons_Selection := 3
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
 Crash_Farm_Dungeon_1 := [1341,282,0xB15A03]
@@ -408,6 +408,9 @@ Loop{
 	
 if(possible_new_event > 2){
 	Crash_Farm_Dungeons_Selection++
+}
+if (Crash_Farm_Dungeons_Selection > 4) {
+Crash_Farm_Dungeons_Selection := 1
 }
 		
 if(Crash_Farm_Dungeons_Selection) == 2 {
