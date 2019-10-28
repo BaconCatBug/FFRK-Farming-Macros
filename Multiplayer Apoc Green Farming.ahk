@@ -121,7 +121,7 @@ Crash_Raid_Dungeons_Brown := [1289,974,0x663114]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
-Crash_Farm_Dungeons_Selection := 3
+Crash_Farm_Dungeons_Selection := 1
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
 Crash_Farm_Dungeon_1 := [1341,282,0xB15A03]
@@ -406,7 +406,7 @@ Loop{
 	}
 } until now > Menu_Timeout*1000
 	
-if(possible_new_event > 2){
+if(possible_new_event > 5){
 	Crash_Farm_Dungeons_Selection++
 }
 if (Crash_Farm_Dungeons_Selection > 4) {
