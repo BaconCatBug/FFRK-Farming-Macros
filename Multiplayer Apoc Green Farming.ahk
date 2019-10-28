@@ -406,7 +406,7 @@ Loop{
 	}
 } until now > Menu_Timeout*1000
 	
-if(possible_new_event > 5){
+if(possible_new_event > 8){
 	Crash_Farm_Dungeons_Selection++
 }
 if (Crash_Farm_Dungeons_Selection > 4) {
