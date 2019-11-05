@@ -41,7 +41,7 @@ Remove_Brown := [1822,502,0x582612]
 Use_RW := 0
 
 ;A BLUE pixel on the "GO!" button.
-Go_Blue := [1627,952,0x1238D2]
+Go_Blue := [1606,944,0x1742D8]
 
 ;A YELLOW pixel on the "1" underneath the word "Stamina".
 ;Searches a 50x50 box on the specified pixel.
@@ -52,15 +52,14 @@ One_Yellow := [1524,510,0xFFDD8E]
 ;If it stalls on the orange button set the pixel a little higher.
 Battle_Blue := [1718,658,0x1F76E2]
 
-;The same pixel but the ORANGE of the spend gems dialogue, to enter slow mode when out of stamina.
-;The macro should work without you changing this thanks to variation matching but it's worth double checking.
-;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for red, not blue.
+;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
+;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Battle_Orange := 0xDE701E 
+Battle_Orange := [1745,652,0xE06B19]
 
 ;A BLUE pixel on the "Back" button when you've run out of stamina.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Back_Blue := [1526,841,0x02186E]
+Back_Blue := [1556,812,0x2139BA]
 
 ;WHITE pixels in the left, middle and right border of the Battle Results Screen (the one with the Champion Rainbow bar, so it detects the end of the battle and prevents missclicks ending auto mode).
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
@@ -135,7 +134,7 @@ Crash_Farm_Dungeon_4 := [1384,859,0x7C2F07]
 ;*******************************************************************;
 
 ;Define MenuPixelFinder
-MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,battle_timeout,resumed:=0,battle_crash:=0,expanded:=0,use_rw:=0) {
+MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,battle_timeout,resumed:=0,battle_crash:=0,expanded:=0,use_rw:=0,look_for_orange:=0,battle_orange1:=0,battle_orange2:=0,battle_orange3:=0,back1:=0,back2:=0) {
 	timeout_start := A_TickCount
 	loop{
 		if(resumed || battle_crash || use_rw){
@@ -155,6 +154,18 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 			BlockInput, MouseMoveOff
 			return 0
 		}
+		if(look_for_orange==1){
+			pixelSearch, XX, YY, battle_orange1-1, battle_orange2-1, battle_orange1+1, battle_orange2+1, battle_orange3, 5, Fast RGB
+			if(XX != ""){
+				sleep click_timeout
+				BlockInput, MouseMove
+				sleep 100
+				MouseClick, Left, back1, back2, 1, 0
+				sleep 100
+				BlockInput, MouseMoveOff
+				return 2
+		}
+			}
 		now := A_TickCount-timeout_start
 		if(now > menu_timeout*1000 && crash_handle == 1){
 			return 1
@@ -191,16 +202,30 @@ loop{
 		goto CrashHandle
 		
 	sleep click_timeout
-	if(MenuPixelFinder(Go_Blue[1],Go_Blue[2],Go_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
+	
+	if(MenuPixelFinder(Go_Blue[1],Go_Blue[2],Go_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,Use_RW) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 		
 	battle_crash := 0
 	resumed := 0
-
+	what_do_timeout_start := A_TickCount
+	Yellow_Label:
 	if(MenuPixelFinder(One_Yellow[1],One_Yellow[2],One_Yellow[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,1) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
-
-	if(MenuPixelFinder(Battle_Blue[1],Battle_Blue[2],Battle_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
+	
+	
+	now := A_TickCount-what_do_timeout_start
+	if(now > menu_timeout*2000 && crash_handle == 1)
+		goto CrashHandle
+	
+	what_do := 0
+	what_do := MenuPixelFinder(Battle_Blue[1],Battle_Blue[2],Battle_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,0,0,1,Battle_Orange[1],Battle_Orange[2],Battle_Orange[3],Back_Blue[1],Back_Blue[2])
+	if(what_do == 2){
+	sleep 10000
+	goto Yellow_Label
+	}
+	
+	if(what_do == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 
 
