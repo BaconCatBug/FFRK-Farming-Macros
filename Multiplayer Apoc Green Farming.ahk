@@ -2,7 +2,7 @@
 #InstallMouseHook
 CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
-
+;Build 20192611
 ;All pixel coordinates in this section must use the "Screen (less often used)" value.
 ;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
@@ -50,7 +50,7 @@ One_Yellow := [1524,510,0xFFDD8E]
 ;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1718,658,0x1F76E2]
+Battle_Blue := [1717,662,0x2394F5]
 
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
@@ -86,13 +86,13 @@ Enable_Crash_Handle := 1
 Enable_Primitive_Event_Update_Handling := 1
 
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_Pixel := [1480,7,0x0DC5A0]
+Crash_Close_Pixel := [1489,11,0xEFECEB]
 
 ;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
 ;Searches a 50x50 box on the specified pixel.
-Crash_App_Launch := [1801,338,0xFFFFFF]
+Crash_App_Launch := [1778,328,0xFFFFFF]
 
 ;A BLUE pixel on the blue "Play" button when FFRK launches.
 Crash_Play_Blue := [1613,782,0x0B2096]
@@ -100,11 +100,11 @@ Crash_Play_Blue := [1613,782,0x0B2096]
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
 Crash_Cancel_Brown := [1448,692,0x422209]
 
-;A YELLOW pixel on the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button.
+;A YELLOW pixel on the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button while NOT in a battle.
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
 Crash_Home_Screen_Yellow := [1854,635,0xFFFF84]
 
-;A YELLOW pixel in the word "Battle" when you're In Battle in an event dungeon.
+;A YELLOW pixel in the word "Battle" when you're "In Battle" in an event dungeon.
 ;To force this screen, enter any event battle staging screen, and before going into the battle itself, press "Home".
 Crash_Event_Battle_Yellow := [1547,657,0xFEFEAF]
 
@@ -209,7 +209,8 @@ loop{
 	battle_crash := 0
 	resumed := 0
 	what_do_timeout_start := A_TickCount
-	Yellow_Label:
+	
+Yellow_Label:
 	if(MenuPixelFinder(One_Yellow[1],One_Yellow[2],One_Yellow[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash,1) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 	
@@ -259,7 +260,7 @@ loop{
 		}
 		if(XX != ""){
 			find_white_left++
-		if(find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+		if(find_white_left > 7 && find_white_middle > 7 && find_white_right > 7) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -340,7 +341,10 @@ Loop{
 		break LoopC1
 	}
 } until now > Menu_Timeout*1000
-	
+
+if (now > Menu_Timeout*1000){
+Goto CrashHandle
+}
 start_timeout := A_TickCount 
 LoopC2:
 Loop{
@@ -357,6 +361,9 @@ Loop{
 	}
 } until now > Menu_Timeout*1000
 
+if (now > Menu_Timeout*1000){
+Goto CrashHandle
+}
 resumed := 0
 
 start_timeout := A_TickCount
@@ -375,6 +382,10 @@ Loop{
 		break LoopC3
 	}
 } until now > 10000
+
+if (now > Menu_Timeout*1000){
+Goto CrashHandle
+}
 
 start_timeout := A_TickCount
 LoopC4:
@@ -408,6 +419,9 @@ Loop{
 	}
 } until now > Menu_Timeout*1000
 
+if (now > Menu_Timeout*1000){
+Goto CrashHandle
+}
 start_timeout := A_TickCount
 LoopC5:
 Loop{
@@ -431,6 +445,10 @@ Loop{
 	}
 } until now > Menu_Timeout*1000
 	
+if (now > Menu_Timeout*1000){
+Goto CrashHandle
+}
+
 if(possible_new_event > 8){
 	Crash_Farm_Dungeons_Selection++
 }
@@ -470,7 +488,9 @@ Loop{
 		break LoopC6
 	}
 } until now > Menu_Timeout*1000
-	
+if (now > Menu_Timeout*1000){
+Goto CrashHandle
+}
 Goto Main_Loop
 
 ^Space::ExitApp
