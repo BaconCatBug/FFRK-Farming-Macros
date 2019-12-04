@@ -2,7 +2,7 @@
 #InstallMouseHook
 CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
-;Build 20192611
+;Build 20191204
 ;All pixel coordinates in this section must use the "Screen (less often used)" value.
 ;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
@@ -18,9 +18,9 @@ Battle_Timeout := 5
 Menu_Timeout := 30
 
 ;The amount of time, in milliseconds, the script will wait between finding a pixel and clicking.
-;Due to FFRK's habit of drawing menus before they are clickable, setting this bellow 350ms will generally result in the script stalling, if the default causes stalling increase until it stops stalling.
-;(Default := 350)
-Click_Timeout := 350
+;Due to FFRK's habit of drawing menus before they are clickable, setting this bellow 400ms will generally result in the script stalling, if the default causes stalling increase until it stops stalling.
+;(Default := 400)
+Click_Timeout := 400
 
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
 Apocalypse_Purple := [1802,513,0x270625]
@@ -50,7 +50,7 @@ One_Yellow := [1524,510,0xFFDD8E]
 ;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1717,662,0x2394F5]
+Battle_Blue := [1716,663,0x1D95F7]
 
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
@@ -61,11 +61,12 @@ Battle_Orange := [1745,652,0xE06B19]
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
 Back_Blue := [1556,812,0x2139BA]
 
-;WHITE pixels in the left, middle and right border of the Battle Results Screen (the one with the Champion Rainbow bar, so it detects the end of the battle and prevents missclicks ending auto mode).
-;The colour code should be 0xFFFFFF unless you've got a really weird setup.
-Left_White := [1245,902,0xFFFFFF]
-Middle_White := [1558,997,0xFFFFFF]
-Right_White := [1865,904,0xFFFFFF]
+;Differently coloured pixels in the Skip Button
+;For best results pick two different blue ones and a white one.
+Top_Skip 	:= [1799,902,0x3041C2]
+Middle_Skip := [1790,927,0xFFFFFF]
+Bottom_Skip := [1799,951,0x041A70]
+
 
 ;A WHITE pixel in the "Next" button text after the battle is won, will be used for all the next buttons.
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
@@ -85,8 +86,11 @@ Enable_Crash_Handle := 1
 ;This will cause the crash handling to go back and try the next dungeon down for when events add a new MP dungeon if it stalls on finding the Apocalypse_Purple pixel
 Enable_Primitive_Event_Update_Handling := 1
 
+;A pixel on the tab that brings up the home screen (not the X, since there is no X you can't close this tab)
+Crash_Home_Tab_Pixel := [1450,14,0x96E0D0]
+
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_Pixel := [1490,7,0xACADAE]
+Crash_Close_Pixel := [1492,8,0x797C7D]
 
 ;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
@@ -95,10 +99,10 @@ Crash_Close_Pixel := [1490,7,0xACADAE]
 Crash_App_Launch := [1778,328,0xFFFFFF]
 
 ;A BLUE pixel on the blue "Play" button when FFRK launches.
-Crash_Play_Blue := [1613,782,0x0B2096]
+Crash_Play_Blue := [1621,775,0x0826B8]
 
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_Cancel_Brown := [1448,692,0x422209]
+Crash_Cancel_Brown := [1341,691,0x481E11]
 
 ;A YELLOW pixel on the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button while NOT in a battle.
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
@@ -120,7 +124,7 @@ Crash_Raid_Dungeons_Brown := [1289,974,0x663114]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
-Crash_Farm_Dungeons_Selection := 1
+Crash_Farm_Dungeons_Selection := 2
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
 Crash_Farm_Dungeon_1 := [1341,282,0xB15A03]
@@ -238,7 +242,7 @@ Yellow_Label:
 	Loop_BattleEnd:
 	loop{
 		resumed := 0
-		pixelSearch, XX, YY, Right_White[1]-5, Right_White[2]-5, Right_White[1]+5, Right_White[2]+5, Right_White[3], 1, Fast RGB
+		pixelSearch, XX, YY, Bottom_Skip[1]-5, Bottom_Skip[2]-5, Bottom_Skip[1]+5, Bottom_Skip[2]+5, Bottom_Skip[3], 1, Fast RGB
 		if(XX = ""){
 			find_white_right := 0
 		}
@@ -248,13 +252,13 @@ Yellow_Label:
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
-			MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+			MouseClick, Left, Middle_Skip[1], Middle_Skip[2], 1, 0
 			BlockInput, MouseMoveOff
 			break Loop_BattleEnd
 		}
 		}
 		
-		pixelSearch, XX, YY, Left_White[1]-5, Left_White[2]-5, Left_White[1]+5, Left_White[2]+5, Left_White[3], 1, Fast RGB
+		pixelSearch, XX, YY, Top_Skip[1]-5, Top_Skip[2]-5, Top_Skip[1]+5, Top_Skip[2]+5, Top_Skip[3], 1, Fast RGB
 		if(XX = ""){
 			find_white_left := 0
 		}
@@ -264,13 +268,14 @@ Yellow_Label:
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
-			MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+			MouseClick, Left, Middle_Skip[1], Middle_Skip[2], 1, 0
 			BlockInput, MouseMoveOff
 			break Loop_BattleEnd
 		}
 		}
 		
-		pixelSearch, XX, YY, Middle_White[1]-5, Middle_White[2]-5, Middle_White[1]+5, Middle_White[2]+5, Middle_White[3], 1, Fast RGB
+		
+		pixelSearch, XX, YY, Middle_Skip[1]-5, Middle_Skip[2]-5, Middle_Skip[1]+5, Middle_Skip[2]+5, Middle_Skip[3], 1, Fast RGB
 		if(XX = ""){
 			find_white_middle := 0
 		}
@@ -280,7 +285,7 @@ Yellow_Label:
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
-			MouseClick, Left, Next_White[1], Next_White[2], 1, 0
+			MouseClick, Left, Middle_Skip[1], Middle_Skip[2], 1, 0
 			BlockInput, MouseMoveOff
 			break Loop_BattleEnd
 		}
@@ -322,9 +327,9 @@ Yellow_Label:
 
 CrashHandle:
 sleep 1000
-MouseClick, Left, Crash_Close_Pixel[1], Crash_Close_Pixel[2], 1, 0
+MouseClick, Left, Crash_Home_Tab_Pixel[1], Crash_Home_Tab_Pixel[2], 1, 0
 sleep 1000
-MouseClick, Left, Crash_App_Launch[1], Crash_App_Launch[2]+25, 1, 0
+MouseClick, Left, Crash_Close_Pixel[1], Crash_Close_Pixel[2], 1, 0
 sleep 1000
 start_timeout := A_TickCount
 LoopC1:
@@ -449,7 +454,7 @@ if (now > Menu_Timeout*1000){
 Goto CrashHandle
 }
 
-if(possible_new_event > 8){
+if(possible_new_event > 4){
 	Crash_Farm_Dungeons_Selection++
 }
 if (Crash_Farm_Dungeons_Selection > 4) {
