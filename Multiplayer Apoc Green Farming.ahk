@@ -2,7 +2,7 @@
 #InstallMouseHook
 CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
-;Build 20191204
+;Build 20191205
 ;All pixel coordinates in this section must use the "Screen (less often used)" value.
 ;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
@@ -21,6 +21,10 @@ Menu_Timeout := 30
 ;Due to FFRK's habit of drawing menus before they are clickable, setting this bellow 400ms will generally result in the script stalling, if the default causes stalling increase until it stops stalling.
 ;(Default := 400)
 Click_Timeout := 400
+
+;A variable to adjust the "sensitivity" of the Skip Button Detection. The higher it is, the more times it needs to "confirm" the button exists, so will click the button slower, but will be less likely to false trigger. The lower it it, the less times it needs to "confirm" the button exists, so will click the button faster but it might trigger falsely. I highly recommend not lowering it, only increasing it.
+;(Default := 3)
+Skip_Sensitivity := 3
 
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
 Apocalypse_Purple := [1802,513,0x270625]
@@ -124,7 +128,7 @@ Crash_Raid_Dungeons_Brown := [1289,974,0x663114]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
-Crash_Farm_Dungeons_Selection := 2
+Crash_Farm_Dungeons_Selection := 3
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
 Crash_Farm_Dungeon_1 := [1341,282,0xB15A03]
@@ -248,7 +252,7 @@ Yellow_Label:
 		}
 		if(XX != ""){
 			find_white_right++
-		if(find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+		if(find_white_left > Skip_Sensitivity && find_white_middle > Skip_Sensitivity && find_white_right > Skip_Sensitivity) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -264,7 +268,7 @@ Yellow_Label:
 		}
 		if(XX != ""){
 			find_white_left++
-		if(find_white_left > 7 && find_white_middle > 7 && find_white_right > 7) {
+		if(find_white_left > Skip_Sensitivity && find_white_middle > Skip_Sensitivity && find_white_right > Skip_Sensitivity) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
@@ -281,7 +285,7 @@ Yellow_Label:
 		}
 		if(XX != ""){
 			find_white_middle++
-		if(find_white_left >7 && find_white_middle > 7 && find_white_right>7) {
+		if(find_white_left > Skip_Sensitivity && find_white_middle > Skip_Sensitivity && find_white_right > Skip_Sensitivity) {
 			sleep Click_Timeout
 			BlockInput, MouseMove
 			sleep 100
