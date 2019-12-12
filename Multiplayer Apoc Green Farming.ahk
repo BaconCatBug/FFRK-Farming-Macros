@@ -27,55 +27,55 @@ Click_Timeout := 400
 Skip_Sensitivity := 3
 
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
-Apocalypse_Purple := [1802,513,0x270625]
+Apocalypse_Purple := [1797,353,0x6E2CD3]
 
 ;A BLUE pixel on the "Enter Dungeon" button.
-Enter_Dungeon_Blue := [1792,955,0x0D2ECC]
+Enter_Dungeon_Blue := [1770,990,0x0F33CE]
 
 ;A BROWN pixel on the "Solo Raid" button.
-Solo_Raid_Brown := [1324,587,0x4B1F0F]
+Solo_Raid_Brown := [1296,598,0x532411]
 
 ;A BLUE pixel on the "Next" button.
-Next_Blue := [1631,959,0x0725B4]
+Next_Blue := [1600,993,0x0E30CD]
 
 ;A BROWN pixel on the "Remove" button of the first Roaming Warrior.
 ;This script is intended for farming, if you need to rely on Cloud USB1 this script isn't for you.
 ;If you really want to use the top RW, change the "Use_RW" variable to 1
-Remove_Brown := [1822,502,0x582612]
+Remove_Brown := [1784,522,0x5B2813]
 Use_RW := 0
 
 ;A BLUE pixel on the "GO!" button.
-Go_Blue := [1606,944,0x1742D8]
+Go_Blue := [1606,996,0x0D2ECC]
 
 ;A YELLOW pixel on the "1" underneath the word "Stamina".
 ;Searches a 50x50 box on the specified pixel.
-One_Yellow := [1524,510,0xFFDD8E]
+One_Yellow := [1505,548,0xFFDD8E]
 
 ;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1716,663,0x1D95F7]
+Battle_Blue := [1579,723,0x1B34AE]
 
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Battle_Orange := [1745,652,0xE06B19]
+Battle_Orange := [1724,753,0xE26B1F]
 
 ;A BLUE pixel on the "Back" button when you've run out of stamina.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Back_Blue := [1556,812,0x2139BA]
+Back_Blue := [1588,944,0x081D7B]
 
 ;Differently coloured pixels in the Skip Button
 ;For best results pick two different blue ones and a white one.
-Top_Skip 	:= [1799,902,0x3041C2]
-Middle_Skip := [1790,927,0xFFFFFF]
-Bottom_Skip := [1799,951,0x041A70]
+Top_Skip 	:= [1795,943,0x2C3EBF]
+Middle_Skip := [1789,967,0xFFFFFF]
+Bottom_Skip := [1795,991,0x02196F]
 
 
 ;A WHITE pixel in the "Next" button text after the battle is won, will be used for all the next buttons.
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
 ;Black_Loading_Screen_Colour is the black of the loading screen when returning to menu in case your one is weird.
-Next_White := [1543,921,0xFFFFFF]
+Next_White := [1529,964,0xFFFFFF]
 Black_Loading_Screen_Colour := 0x000000
 
 ;************************;
@@ -91,50 +91,50 @@ Enable_Crash_Handle := 1
 Enable_Primitive_Event_Update_Handling := 1
 
 ;A pixel on the tab that brings up the home screen (not the X, since there is no X you can't close this tab)
-Crash_Home_Tab_Pixel := [1450,14,0x96E0D0]
+Crash_Home_Tab_Pixel := [1422,17,0xF8FEFF]
 
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_Pixel := [1492,8,0x797C7D]
+Crash_Close_Pixel := [1460,7,0xFFFFFF]
 
 ;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
 ;Searches a 50x50 box on the specified pixel.
-Crash_App_Launch := [1778,328,0xFFFFFF]
+Crash_App_Launch := [1774,342,0xFFFFFF]
 
 ;A BLUE pixel on the blue "Play" button when FFRK launches.
-Crash_Play_Blue := [1621,775,0x0826B8]
+Crash_Play_Blue := [1602,814,0x0A22A3]
 
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_Cancel_Brown := [1341,691,0x481E11]
+Crash_Cancel_Brown := [1435,722,0x4B2011]
 
 ;A YELLOW pixel on the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button while NOT in a battle.
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
-Crash_Home_Screen_Yellow := [1854,635,0xFFFF84]
+Crash_Home_Screen_Yellow := [1850,663,0xFFFB7F]
 
-;A YELLOW pixel in the word "Battle" when you're "In Battle" in an event dungeon.
-;To force this screen, enter any event battle staging screen, and before going into the battle itself, press "Home".
-Crash_Event_Battle_Yellow := [1547,657,0xFEFEAF]
+;A YELLOW pixel in the word "Battle" when you're "In Battle" in an Event Dungeon.
+;To force this screen, enter any Event Battle staging screen, and before going into the battle itself, press "Home".
+Crash_Event_Battle_Yellow := [1519,687,0xFFFEBF]
 
 ;A WHITE pixel on the white hair of the Bartz lookalike in the "Raid Dungeons" button.
-Crash_Raid_Dungeons_White := [1719,98,0xFCFEFE]
+Crash_Raid_Dungeons_White := [1706,100,0xF1FAFE]
 
 ;A GREEN pixel on the green hair of the Bartz lookalike in the "Event Dungeons" button.
-Crash_Event_Dungeons_Green := [1764,98,0x89E810]
+Crash_Event_Dungeons_Green := [1758,100,0x89E810]
 
 
 ;A BROWN pixel on the rounded "Back" button on the Raid Dungeons screen.
-Crash_Raid_Dungeons_Brown := [1289,974,0x663114]
+Crash_Raid_Dungeons_Brown := [1265,1014,0x693114]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
 Crash_Farm_Dungeons_Selection := 3
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
-Crash_Farm_Dungeon_1 := [1341,282,0xB15A03]
-Crash_Farm_Dungeon_2 := [1340,469,0x201011]
-Crash_Farm_Dungeon_3 := [1344,661,0x23221F]
-Crash_Farm_Dungeon_4 := [1384,859,0x7C2F07]
+Crash_Farm_Dungeon_1 := [1280,293,0x282525]
+Crash_Farm_Dungeon_2 := [1280,508,0x8F8FD5]
+Crash_Farm_Dungeon_3 := [1280,706,0x6C3C04]
+Crash_Farm_Dungeon_4 := [1280,885,0x1368A8]
 
 ;*******************************************************************;
 ;**Do not edit below this line unless you know what you are doing.**;
