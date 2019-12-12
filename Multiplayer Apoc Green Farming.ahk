@@ -2,7 +2,7 @@
 #InstallMouseHook
 CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
-;Build 20191205
+;Build 20191212
 ;All pixel coordinates in this section must use the "Screen (less often used)" value.
 ;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
@@ -27,34 +27,34 @@ Click_Timeout := 400
 Skip_Sensitivity := 3
 
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
-Apocalypse_Purple := [1797,353,0x6E2CD3]
+Apocalypse_Purple := [1843,342,0x6E2BD3]
 
 ;A BLUE pixel on the "Enter Dungeon" button.
-Enter_Dungeon_Blue := [1770,990,0x0F33CE]
+Enter_Dungeon_Blue := [1821,944,0x143BD3]
 
 ;A BROWN pixel on the "Solo Raid" button.
-Solo_Raid_Brown := [1296,598,0x532411]
+Solo_Raid_Brown := [1392,593,0x471D0F]
 
 ;A BLUE pixel on the "Next" button.
-Next_Blue := [1600,993,0x0E30CD]
+Next_Blue := [1645,944,0x1033CF]
 
 ;A BROWN pixel on the "Remove" button of the first Roaming Warrior.
 ;This script is intended for farming, if you need to rely on Cloud USB1 this script isn't for you.
 ;If you really want to use the top RW, change the "Use_RW" variable to 1
-Remove_Brown := [1784,522,0x5B2813]
+Remove_Brown := [1821,499,0x5C2813]
 Use_RW := 0
 
 ;A BLUE pixel on the "GO!" button.
-Go_Blue := [1606,996,0x0D2ECC]
+Go_Blue := [1659,954,0x0724B1]
 
 ;A YELLOW pixel on the "1" underneath the word "Stamina".
 ;Searches a 50x50 box on the specified pixel.
-One_Yellow := [1505,548,0xFFDD8E]
+One_Yellow := [1566,523,0x7D6D49]
 
 ;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1579,723,0x1B34AE]
+Battle_Blue := [1808,692,0x0928BD]
 
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
@@ -67,15 +67,15 @@ Back_Blue := [1596,899,0xF7F8FB]
 
 ;Differently coloured pixels in the Skip Button
 ;For best results pick two different blue ones and a white one.
-Top_Skip 	:= [1795,943,0x2C3EBF]
-Middle_Skip := [1789,967,0xFFFFFF]
-Bottom_Skip := [1795,991,0x02196F]
+Top_Skip 	:= [1840,897,0x3142C3]
+Middle_Skip := [1832,921,0xFFFFFF]
+Bottom_Skip := [1842,946,0x041A70]
 
 
 ;A WHITE pixel in the "Next" button text after the battle is won, will be used for all the next buttons.
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
 ;Black_Loading_Screen_Colour is the black of the loading screen when returning to menu in case your one is weird.
-Next_White := [1529,964,0xFFFFFF]
+Next_White := [1587,918,0xFFFFFF]
 Black_Loading_Screen_Colour := 0x000000
 
 ;************************;
@@ -91,50 +91,49 @@ Enable_Crash_Handle := 1
 Enable_Primitive_Event_Update_Handling := 1
 
 ;A pixel on the tab that brings up the home screen (not the X, since there is no X you can't close this tab)
-Crash_Home_Tab_Pixel := [1422,17,0xF8FEFF]
+Crash_Home_Tab_Pixel := [1376,22,0x1D212B]
 
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_Pixel := [1460,7,0xFFFFFF]
+Crash_Close_Pixel := [1575,18,0x224863]
 
 ;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
 ;Searches a 50x50 box on the specified pixel.
-Crash_App_Launch := [1774,342,0xFFFFFF]
+Crash_App_Launch := [1818,160,0xFFFFFF]
 
 ;A BLUE pixel on the blue "Play" button when FFRK launches.
-Crash_Play_Blue := [1602,814,0x0A22A3]
+Crash_Play_Blue := [1651,767,0x0D2ECC]
 
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_Cancel_Brown := [1435,722,0x4B2011]
+Crash_Cancel_Brown := [1500,692,0x4A1E11]
 
 ;A YELLOW pixel on the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button while NOT in a battle.
 ;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
-Crash_Home_Screen_Yellow := [1850,663,0xFFFB7F]
+Crash_Home_Screen_Yellow := [1894,642,0xF7D143]
 
 ;A YELLOW pixel in the word "Battle" when you're "In Battle" in an Event Dungeon.
 ;To force this screen, enter any Event Battle staging screen, and before going into the battle itself, press "Home".
-Crash_Event_Battle_Yellow := [1519,687,0xFFFEBF]
+Crash_Event_Battle_Yellow := [1580,657,0xFCFAA6]
 
 ;A WHITE pixel on the white hair of the Bartz lookalike in the "Raid Dungeons" button.
-Crash_Raid_Dungeons_White := [1706,100,0xF1FAFE]
+Crash_Raid_Dungeons_White := [1758,103,0xFCFDFE]
 
 ;A GREEN pixel on the green hair of the Bartz lookalike in the "Event Dungeons" button.
-Crash_Event_Dungeons_Green := [1758,100,0x89E810]
-
+Crash_Event_Dungeons_Green := [1805,102,0x89E810]
 
 ;A BROWN pixel on the rounded "Back" button on the Raid Dungeons screen.
-Crash_Raid_Dungeons_Brown := [1265,1014,0x693114]
+Crash_Raid_Dungeons_Brown := [1341,969,0x683214]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
 Crash_Farm_Dungeons_Selection := 3
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
-Crash_Farm_Dungeon_1 := [1280,293,0x282525]
-Crash_Farm_Dungeon_2 := [1280,508,0x8F8FD5]
-Crash_Farm_Dungeon_3 := [1280,706,0x6C3C04]
-Crash_Farm_Dungeon_4 := [1280,885,0x1368A8]
+Crash_Farm_Dungeon_1 := [1347,289,0x38190E]
+Crash_Farm_Dungeon_2 := [1347,486,0x282323]
+Crash_Farm_Dungeon_3 := [1347,671,0xB9947B]
+Crash_Farm_Dungeon_4 := [1347,867,0x142394]
 
 ;*******************************************************************;
 ;**Do not edit below this line unless you know what you are doing.**;
