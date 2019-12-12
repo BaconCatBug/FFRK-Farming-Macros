@@ -36,19 +36,19 @@ Battle_Blue := [1761,646,0x2493F5]
 ;The macro should work without you changing the colour thanks to variation matching but it's worth double checking.
 ;In any case it shouldn't spend gems even if it does click as Loop3 is looking for red, not blue.
 ;Get to < 90 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
-Battle_Orange :=  [1708,676,0xDE701E] 
+Battle_Orange := [1778,721,0xE26B20]
 
 ;The position of the "Back" button when you've run out of stamina.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
-Battle_Back := [1542,952,0x02186E]
+Battle_Back := [1605,879,0x1B33AD]
 
 ;A White pixel on the "Skip" button text at the end of the battle.
 ;Unlike the Apoc farming scripts this only checks for a single pixel and triggers once it sees it.
 ;Please set your farming team to not use any abilities, only use the AOE attack Record Materia.
-Skip_White := [1788,967,0xFFFFFF]
+Skip_White := [1834,922,0xFFFFFF]
 
 ;A White pixel in the "Next" button text.
-Next_White := [1527,965,0xFFFFFF]
+Next_White := [1587,918,0xFFFFFF]
 
 ;Crash Handling
 ;This will enable the macro to recover for when (yes, when) FFRK crashes.
@@ -58,24 +58,24 @@ Next_White := [1527,965,0xFFFFFF]
 Enable_Crash_Handle := 1
 
 ;A pixel on the tab that brings up the home screen (not the X, since there is no X you can't close this tab)
-Crash_Home_Tab_Pixel := [1423,16,0xDEF2F1]
+Crash_Home_Tab_Pixel := [1384,18,0x1D212B]
 
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_Pixel := [1459,6,0xFFFFFF]
+Crash_Close_Pixel := [1573,18,0x1282B8]
 
 ;The position of the FFRK launcher icon.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
-Crash_App_Launch := [1781,346,0xE1ACBB]
+Crash_App_Launch := [1817,160,0xFFFFFF]
 
 ;The position and colour of the blue "Play" button when FFRK launches.
-Crash_Play := [1579,811,0x0824B0]
+Crash_Play := [1639,766,0x0D2ECC]
 
 ;The position and colour of the blue "OK" button when resuming an interrupted fight (This is for the battle load crash).
 Crash_OK := [1651,723,0x133CD2]
 
 ;The position and colour of the center of the bottom edge of the scroll that says "Realm Dungeons".
-Crash_In_Battle := [1365,587,0xEABE5B]
+Crash_In_Battle := [1433,564,0x7B5D2B]
 
 
 ;******************************************************************;
@@ -114,7 +114,7 @@ loop{
 		break Loop2
 		}
 		;tooltip, 2
-		PixelSearch, ZZ, YY, Battle_Blue[1]-1, Battle_Blue[2]-1, Battle_Blue[1]+1, Battle_Blue[2]+1, Battle_Orange[3], 5, Fast RGB
+		PixelSearch, ZZ, YY, Battle_Orange[1]-1, Battle_Orange[2]-1, Battle_Orange[1]+1, Battle_Orange[2]+1, Battle_Orange[3], 5, Fast RGB
 		if (ZZ != ""){
 		sleep 1000
 		MouseClick, Left, Battle_Back[1], Battle_Back[2], 1, 0

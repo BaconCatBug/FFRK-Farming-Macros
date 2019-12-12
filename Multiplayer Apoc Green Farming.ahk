@@ -59,11 +59,11 @@ Battle_Blue := [1579,723,0x1B34AE]
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Battle_Orange := [1724,753,0xE26B1F]
+Battle_Orange := [1776,719,0xE27120]
 
 ;A BLUE pixel on the "Back" button when you've run out of stamina.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Back_Blue := [1588,944,0x081D7B]
+Back_Blue := [1596,899,0xF7F8FB]
 
 ;Differently coloured pixels in the Skip Button
 ;For best results pick two different blue ones and a white one.
