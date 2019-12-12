@@ -30,10 +30,10 @@ Yellow_Swords := [1470,671,0xF2DF3D]
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1708,676,0x2690F4]
+Battle_Blue := [1761,646,0x2493F5]
 
 ;The same (doesn't need to be identical but it needs to be close) Pixel but the orange of the spend gems dialogue, to enter slow mode when out of stamina.
-;The macro should work without you changing this thanks to variation matching but it's worth double checking.
+;The macro should work without you changing the colour thanks to variation matching but it's worth double checking.
 ;In any case it shouldn't spend gems even if it does click as Loop3 is looking for red, not blue.
 ;Get to < 90 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
 Battle_Orange :=  [1708,676,0xDE701E] 
