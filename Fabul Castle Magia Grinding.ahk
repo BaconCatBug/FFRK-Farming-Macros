@@ -11,7 +11,7 @@ CoordMode, Mouse, Screen
 ;Alternitively set the AHK.exe main executable to always run as Administrator.
 
 ;The amount of time, in minutes, you want the script to wait while in the battle before it decides something has gone wrong and triggers the crash handling.
-;(Default := 5)
+;(Default := 1)
 Battle_Timeout := 1
 
 ;The amount of time, in seconds, you want the script to wait in menus before it decides something has gone wrong and triggers the crash handling.
