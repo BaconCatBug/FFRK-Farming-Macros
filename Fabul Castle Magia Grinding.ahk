@@ -25,15 +25,12 @@ Click_Timeout := 400
 
 ;A Yellow Pixel on the yellow crossed swords of Fabul Castle - 1st Battle.
 ;This will search a 3x3 square centred on the given pixel for the given colour.
-Yellow_Swords := [1407,697,0xC4AB2C]
+Yellow_Swords := [1470,671,0xF2DF3D]
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
 Battle_Blue := [1708,676,0x2690F4]
-Loop2_Pixel_X := 1722
-Loop2_Pixel_Y := 649
-Loop2_Pixel_C := 0x1E51EA
 
 ;The same (doesn't need to be identical but it needs to be close) Pixel but the orange of the spend gems dialogue, to enter slow mode when out of stamina.
 ;The macro should work without you changing this thanks to variation matching but it's worth double checking.
