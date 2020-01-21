@@ -2,7 +2,7 @@
 #InstallMouseHook
 CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
-;Build 20191212
+;Build 20200121
 ;All pixel coordinates in this section must use the "Screen (less often used)" value.
 ;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
@@ -68,9 +68,9 @@ Back_Blue := [1564,947,0x071D74]
 
 ;Differently coloured pixels in the Skip Button
 ;For best results pick two different blue ones and a white one.
-Top_Skip 	:= [1792,942,0x3142C2]
-Middle_Skip := [1786,967,0xFFFFFF]
-Bottom_Skip := [1791,991,0x031A70]
+Top_Skip 	:= [1786,938,0x2A3CBE]
+Middle_Skip := [1778,966,0xFFFFFF]
+Bottom_Skip := [1788,1001,0x051A70]
 
 
 ;A WHITE pixel in the "Next" button text after the battle is won, will be used for all the next buttons.
@@ -109,9 +109,9 @@ Crash_Play_Blue := [1513,798,0x1847DB]
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
 Crash_Cancel_Brown := [1430,722,0x4A1E11]
 
-;A YELLOW pixel on the yellow dome in the top left of the Event Dungeon button, without moving the home screen after pressing the "Home" button while NOT in a battle.
-;Because of the particle effects the colour likes to jump around and this was the most stable place I could find.
-Crash_Home_Screen_Yellow := [1849,668,0xFFEE62]
+;A GREEN pixel on the tree on the left of the Event Dungeon button, without moving the home screen after pressing the "Home" button after entering the event dungeons but also while NOT in a battle.
+;Because of the particle effects the colour likes to jump around, keep the cursor over a spot and try and select a long lived colour.
+Crash_Home_Screen_Green := [1849,668,0xFFEE62]
 
 ;A YELLOW pixel in the word "Battle" when you're "In Battle" in an Event Dungeon.
 ;To force this screen, enter any Event Battle staging screen, and before going into the battle itself, press "Home".
@@ -395,26 +395,14 @@ Loop{
 if (now > Menu_Timeout*1000){
 Goto CrashHandle
 }
-
 start_timeout := A_TickCount
-LoopC4:
+LoopC44:
 Loop{
 	if(resumed = 1){
-		break LoopC4
+		break LoopC44
 	}
-
 	now := A_TickCount-start_timeout
-	pixelSearch, XX, YY, Crash_Home_Screen_Yellow[1]-2, Crash_Home_Screen_Yellow[2]-2, Crash_Home_Screen_Yellow[1]+2, Crash_Home_Screen_Yellow[2]+2, Crash_Home_Screen_Yellow[3], 6, Fast RGB
-	if(XX != ""){
-		sleep click_timeout
-		BlockInput, MouseMove
-		sleep 100
-		MouseClick, Left, Crash_Home_Screen_Yellow[1], Crash_Home_Screen_Yellow[2], 1, 0
-		sleep 100
-		BlockInput, MouseMoveOff
-		break LoopC4
-	}
-	
+		
 	pixelSearch, XX, YY, Crash_Event_Battle_Yellow[1]-2, Crash_Event_Battle_Yellow[2]-2, Crash_Event_Battle_Yellow[1]+2, Crash_Event_Battle_Yellow[2]+2, Crash_Event_Battle_Yellow[3], 6, Fast RGB
 	if(XX != ""){
 		battle_crash := 1
@@ -424,8 +412,30 @@ Loop{
 		MouseClick, Left, Crash_Event_Battle_Yellow[1], Crash_Event_Battle_Yellow[2], 1, 0
 		sleep 100
 		BlockInput, MouseMoveOff
+		break LoopC44
+	}
+
+} until now > Menu_Timeout*1000
+
+start_timeout := A_TickCount
+LoopC4:
+Loop{
+	if(resumed = 1){
 		break LoopC4
 	}
+
+	now := A_TickCount-start_timeout
+	pixelSearch, XX, YY, Crash_Home_Screen_Green[1]-2, Crash_Home_Screen_Green[2]-2, Crash_Home_Screen_Green[1]+2, Crash_Home_Screen_Green[2]+2, Crash_Home_Screen_Green[3], 6, Fast RGB
+	if(XX != ""){
+		sleep click_timeout
+		BlockInput, MouseMove
+		sleep 100
+		MouseClick, Left, Crash_Home_Screen_Green[1], Crash_Home_Screen_Green[2], 1, 0
+		sleep 100
+		BlockInput, MouseMoveOff
+		break LoopC4
+	}
+	
 } until now > Menu_Timeout*1000
 
 if (now > Menu_Timeout*1000){
