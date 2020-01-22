@@ -8,6 +8,7 @@ CoordMode, Mouse, Screen
 ;All colours in this section should be of the format 0xRRGGBB
 ;If the script won't run for you in Windows 10, you need to set your variables, compile the script as an EXE then run the EXE as Administrator.
 ;Alternitively set the AHK.exe main executable to always run as Administrator.
+;Note: To stop the script, either close the script by right clicking the icon in the system tray or press Control+Space
 
 ;The amount of time, in minutes, you want the script to wait while in the battle before it decides something has gone wrong and triggers the crash handling.
 ;(Default := 5)
