@@ -2,7 +2,7 @@
 #InstallMouseHook
 CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
-;Build 20200122
+;Build 20200126
 ;All pixel coordinates in this section must use the "Screen (less often used)" value.
 ;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
@@ -110,9 +110,8 @@ Crash_Play_Blue := [1513,798,0x1847DB]
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
 Crash_Cancel_Brown := [1430,722,0x4A1E11]
 
-;A GREEN pixel on the tree on the left of the Event Dungeon button, without moving the home screen after pressing the "Home" button after entering the event dungeons but also while NOT in a battle.
-;Because of the particle effects the colour likes to jump around, keep the cursor over a spot and try and select a long lived colour.
-Crash_Home_Screen_Green := [1849,668,0xFFEE62]
+;A YELLOW pixel on the Event Dungeons scroll banner, just to the left of the word Event, without moving the home screen after pressing the "Home" button after entering the event dungeons but also while NOT in a battle.
+Crash_Home_Scroll_Yellow := [1540,575,0xF2BE49]
 
 ;A YELLOW pixel in the word "Battle" when you're "In Battle" in an Event Dungeon.
 ;To force this screen, enter any Event Battle staging screen, and before going into the battle itself, press "Home".
@@ -426,12 +425,12 @@ Loop{
 	}
 
 	now := A_TickCount-start_timeout
-	pixelSearch, XX, YY, Crash_Home_Screen_Green[1]-2, Crash_Home_Screen_Green[2]-2, Crash_Home_Screen_Green[1]+2, Crash_Home_Screen_Green[2]+2, Crash_Home_Screen_Green[3], 6, Fast RGB
+	pixelSearch, XX, YY, Crash_Home_Scroll_Yellow[1]-2, Crash_Home_Scroll_Yellow[2]-2, Crash_Home_Scroll_Yellow[1]+2, Crash_Home_Scroll_Yellow[2]+2, Crash_Home_Scroll_Yellow[3], 6, Fast RGB
 	if(XX != ""){
 		sleep click_timeout
 		BlockInput, MouseMove
 		sleep 100
-		MouseClick, Left, Crash_Home_Screen_Green[1], Crash_Home_Screen_Green[2], 1, 0
+		MouseClick, Left, Crash_Home_Scroll_Yellow[1], Crash_Home_Scroll_Yellow[2], 1, 0
 		sleep 100
 		BlockInput, MouseMoveOff
 		break LoopC4
