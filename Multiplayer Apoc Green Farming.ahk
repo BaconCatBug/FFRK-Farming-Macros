@@ -2,7 +2,7 @@
 #InstallMouseHook
 CoordMode, pixel, Screen
 CoordMode, Mouse, Screen
-;Build 20200126
+;Build 20200401
 ;All pixel coordinates in this section must use the "Screen (less often used)" value.
 ;Unless otherwise specified, the search range will be a 3x3 box centered on the specified pixel.
 ;All colours in this section should be of the format 0xRRGGBB
@@ -21,63 +21,63 @@ Menu_Timeout := 30
 ;The amount of time, in milliseconds, the script will wait between finding a pixel and clicking.
 ;Due to FFRK's habit of drawing menus before they are clickable, setting this bellow 400ms will generally result in the script stalling, if the default causes stalling increase until it stops stalling.
 ;(Default := 400)
-Click_Timeout := 400
+Click_Timeout := 450
 
 ;A variable to adjust the "sensitivity" of the Skip Button Detection. The higher it is, the more times it needs to "confirm" the button exists, so will click the button slower, but will be less likely to false trigger. The lower it it, the less times it needs to "confirm" the button exists, so will click the button faster but it might trigger falsely. I highly recommend not lowering it, only increasing it.
 ;(Default := 3)
 Skip_Sensitivity := 3
 
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
-Apocalypse_Purple := [1805,506,0x41012F]
+Apocalypse_Purple := [1780,486,0x780751]
 
 ;A BLUE pixel on the "Enter Dungeon" button.
-Enter_Dungeon_Blue := [1664,992,0x0E31CE]
+Enter_Dungeon_Blue := [1776,944,0x2348E1]
 
 ;A BROWN pixel on the "Solo Raid" button.
-Solo_Raid_Brown := [1300,611,0x4C1F0F]
+Solo_Raid_Brown := [1344,584,0x502110]
 
 ;A BLUE pixel on the "Next" button.
-Next_Blue := [1588,995,0x0D2ECC]
+Next_Blue := [1633,940,0x2C64E7]
 
 ;A BROWN pixel on the "Remove" button of the first Roaming Warrior.
 ;This script is intended for farming, if you need to rely on Cloud USB1 this script isn't for you.
 ;If you really want to use the top RW, change the "Use_RW" variable to 1
-Remove_Brown := [1787,524,0x582612]
+Remove_Brown := [1758,505,0x5D2913]
 Use_RW := 0
 
 ;A BLUE pixel on the "GO!" button.
-Go_Blue := [1591,1001,0x0724B1]
+Go_Blue := [1627,953,0x2040D4]
 
 ;A YELLOW pixel on the "1" underneath the word "Stamina" or on the word Stamina itself.
 ;Hint: The pixel should have a red value of FF
 ;Searches a 50x50 box on the specified pixel.
-One_Yellow := [1505,549,0xFFDD8E]
+One_Yellow := [1524,532,0xFFDD8E]
 
 ;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1606,715,0x1F5DE2]
+Battle_Blue := [1597,696,0x2039B9]
 
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Battle_Orange := [1719,756,0xE26B20]
+Battle_Orange := [1720,731,0xE26B20]
 
 ;A BLUE pixel on the "Back" button when you've run out of stamina.
 ;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 50 stamina fight if needs be.
-Back_Blue := [1564,947,0x071D74]
+Back_Blue := [1601,902,0x0A1F87]
 
 ;Differently coloured pixels in the Skip Button
 ;For best results pick two different blue ones and a white one.
-Top_Skip 	:= [1786,938,0x2A3CBE]
-Middle_Skip := [1778,966,0xFFFFFF]
-Bottom_Skip := [1788,1001,0x051A70]
+Top_Skip 	:= [1791,902,0x283BBB]
+Middle_Skip := [1780,926,0xFFFFFF]
+Bottom_Skip := [1787,952,0x00176F]
 
 
 ;A WHITE pixel in the "Next" button text after the battle is won, will be used for all the next buttons.
 ;The colour code should be 0xFFFFFF unless you've got a really weird setup.
 ;Black_Loading_Screen_Colour is the black of the loading screen when returning to menu in case your one is weird.
-Next_White := [1509,951,0xFFFFFF]
+Next_White := [1528,921,0xFFFFFF]
 Black_Loading_Screen_Colour := 0x000000
 
 ;************************;
@@ -93,48 +93,48 @@ Enable_Crash_Handle := 1
 Enable_Primitive_Event_Update_Handling := 1
 
 ;A pixel on the tab that brings up the home screen (not the X, since there is no X you can't close this tab)
-Crash_Home_Tab_Pixel := [1421,14,0x6AD4BA]
+Crash_Home_Tab_Pixel := [1452,14,0x96E0D0]
 
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_Pixel := [1461,9,0x797C7D]
+Crash_Close_Pixel := [1492,8,0xACADAE]
 
 ;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
 ;Searches a 50x50 box on the specified pixel.
-Crash_App_Launch := [1774,341,0xFFFFFF]
+Crash_App_Launch := [1780,332,0xFFFFFF]
 
 ;A BLUE pixel on the blue "Play" button when FFRK launches.
-Crash_Play_Blue := [1513,798,0x1847DB]
+Crash_Play_Blue := [1623,781,0x0725B4]
 
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_Cancel_Brown := [1430,722,0x4A1E11]
+Crash_Cancel_Brown := [1465,692,0x572511]
 
-;A YELLOW pixel on the Event Dungeons scroll banner, just to the left of the word Event, without moving the home screen after pressing the "Home" button after entering the event dungeons but also while NOT in a battle.
-Crash_Home_Scroll_Yellow := [1540,575,0xF2BE49]
+;A YELLOW pixel on the Event Dungeons scroll banner, just to the right of the word Event, without moving the home screen after pressing the "Home" button after entering the event dungeons but also while NOT in a battle.
+Crash_Home_Scroll_Yellow := [1465,542,0xA9630D]
 
 ;A YELLOW pixel in the word "Battle" when you're "In Battle" in an Event Dungeon.
 ;To force this screen, enter any Event Battle staging screen, and before going into the battle itself, press "Home".
-Crash_Event_Battle_Yellow := [1526,687,0xFEFEAE]
+Crash_Event_Battle_Yellow := [1479,542,0xFFF2CA]
 
 ;A WHITE pixel on the white hair of the Bartz lookalike in the "Raid Dungeons" button.
-Crash_Raid_Dungeons_White := [1709,99,0xF2FBFE]
+Crash_Raid_Dungeons_White := [1715,101,0xFFFFFF]
 
 ;A GREEN pixel on the green hair of the Bartz lookalike in the "Event Dungeons" button.
-Crash_Event_Dungeons_Green := [1758,98,0x87F92C]
+Crash_Event_Dungeons_Green := [1761,103,0x89EB15]
 
 ;A BROWN pixel on the rounded "Back" button on the Raid Dungeons screen.
-Crash_Raid_Dungeons_Brown := [1261,1013,0x6C3514]
+Crash_Raid_Dungeons_Brown := [1298,974,0x703815]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
 Crash_Farm_Dungeons_Selection := 1
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
-Crash_Farm_Dungeon_1 := [1284,300,0x947F84]
-Crash_Farm_Dungeon_2 := [1284,506,0x856B92]
-Crash_Farm_Dungeon_3 := [1284,688,0x121211]
-Crash_Farm_Dungeon_4 := [1284,905,0x261915]
+Crash_Farm_Dungeon_1 := [1303,288,0x3D063E]
+Crash_Farm_Dungeon_2 := [1303,482,0x1D1813]
+Crash_Farm_Dungeon_3 := [1303,673,0x9B023D]
+Crash_Farm_Dungeon_4 := [1303,850,0x1566A6]
 
 ;*******************************************************************;
 ;**Do not edit below this line unless you know what you are doing.**;
@@ -192,7 +192,9 @@ loop{
 		} else {
 			possible_new_event := 0
 		}
-		
+;******************************************************;
+sleep 200
+;******************************************************;
 	sleep click_timeout
 	if(MenuPixelFinder(Enter_Dungeon_Blue[1],Enter_Dungeon_Blue[2],Enter_Dungeon_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
