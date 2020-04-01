@@ -111,17 +111,17 @@ Crash_Play_Blue := [1623,781,0x0725B4]
 Crash_Cancel_Brown := [1465,692,0x572511]
 
 ;A YELLOW pixel on the Event Dungeons scroll banner, just to the right of the word Event, without moving the home screen after pressing the "Home" button after entering the event dungeons but also while NOT in a battle.
-Crash_Home_Scroll_Yellow := [1465,542,0xA9630D]
+Crash_Home_Scroll_Yellow := [1556,549,0xF2C248]
 
 ;A YELLOW pixel in the word "Battle" when you're "In Battle" in an Event Dungeon.
 ;To force this screen, enter any Event Battle staging screen, and before going into the battle itself, press "Home".
-Crash_Event_Battle_Yellow := [1479,542,0xFFF2CA]
+Crash_Event_Battle_Yellow := [1537,663,0xFFFEB7]
 
 ;A WHITE pixel on the white hair of the Bartz lookalike in the "Raid Dungeons" button.
-Crash_Raid_Dungeons_White := [1715,101,0xFFFFFF]
+Crash_Raid_Dungeons_White := [1716,102,0xFBFDFE]
 
 ;A GREEN pixel on the green hair of the Bartz lookalike in the "Event Dungeons" button.
-Crash_Event_Dungeons_Green := [1761,103,0x89EB15]
+Crash_Event_Dungeons_Green := [1760,104,0x89E810]
 
 ;A BROWN pixel on the rounded "Back" button on the Raid Dungeons screen.
 Crash_Raid_Dungeons_Brown := [1298,974,0x703815]
