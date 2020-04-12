@@ -30,6 +30,9 @@ Skip_Sensitivity := 3
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
 Apocalypse_Purple := [1780,486,0x780751]
 
+;A YELLOW pixel in the center of the screen that can sometimes be covered up by the grey "Loading" dialog. This is to prevent misclicks of the Enter Dungeon button when it is not active.
+Enter_Dungeon_Yellow := [1556,603,0xCAAB7C]
+
 ;A BLUE pixel on the "Enter Dungeon" button.
 Enter_Dungeon_Blue := [1776,944,0x2348E1]
 
@@ -46,7 +49,7 @@ Remove_Brown := [1758,505,0x5D2913]
 Use_RW := 0
 
 ;A BLUE pixel on the "GO!" button.
-Go_Blue := [1627,953,0x2040D4]
+Go_Blue := [1622,952,0x1136D1]
 
 ;A YELLOW pixel on the "1" underneath the word "Stamina" or on the word Stamina itself.
 ;Hint: The pixel should have a red value of FF
@@ -128,7 +131,7 @@ Crash_Raid_Dungeons_Brown := [1298,974,0x703815]
 
 ;The position of the event dungeon banner you wish to farm, 1 being the top banner.
 ;This is so you only need to get the pixel information for the banners once below and can edit this variable to change which dungeon you wish to farm.
-Crash_Farm_Dungeons_Selection := 1
+Crash_Farm_Dungeons_Selection := 2
 
 ;Any pixel of each of the event dungeon banners, from top to bottom.
 Crash_Farm_Dungeon_1 := [1303,288,0x3D063E]
@@ -192,10 +195,11 @@ loop{
 		} else {
 			possible_new_event := 0
 		}
-;******************************************************;
-sleep 200
-;******************************************************;
+		
 	sleep click_timeout
+	if(MenuPixelFinder(Enter_Dungeon_Yellow[1],Enter_Dungeon_Yellow[2],Enter_Dungeon_Yellow[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
+		goto CrashHandle
+		
 	if(MenuPixelFinder(Enter_Dungeon_Blue[1],Enter_Dungeon_Blue[2],Enter_Dungeon_Blue[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1)
 		goto CrashHandle
 		
