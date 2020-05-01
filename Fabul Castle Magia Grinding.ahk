@@ -35,11 +35,11 @@ Battle_Blue := [1761,646,0x2493F5]
 ;The same (doesn't need to be identical but it needs to be close) Pixel but the orange of the spend gems dialogue, to enter slow mode when out of stamina.
 ;The macro should work without you changing the colour thanks to variation matching but it's worth double checking.
 ;In any case it shouldn't spend gems even if it does click as Loop3 is looking for red, not blue.
-;Get to < 90 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
+;Get to < 50 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
 Battle_Orange := [1778,721,0xE26B20]
 
 ;The position of the "Back" button when you've run out of stamina.
-;Get to <=49 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
+;Get to < 50 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
 Battle_Back := [1605,879,0x1B33AD]
 
 ;A White pixel on the "Skip" button text at the end of the battle.
