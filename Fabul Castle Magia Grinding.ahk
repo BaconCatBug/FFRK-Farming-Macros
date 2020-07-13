@@ -25,30 +25,30 @@ Click_Timeout := 400
 
 ;A Yellow Pixel on the yellow crossed swords of Fabul Castle - 1st Battle.
 ;This will search a 3x3 square centred on the given pixel for the given colour.
-Yellow_Swords := [1470,671,0xF2DF3D]
+Yellow_Swords := [1435,653,0xF5E64C]
 
 ;A Blue Pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1761,646,0x2493F5]
+Battle_Blue := [1751,653,0x2052E9]
 
 ;The same (doesn't need to be identical but it needs to be close) Pixel but the orange of the spend gems dialogue, to enter slow mode when out of stamina.
 ;The macro should work without you changing the colour thanks to variation matching but it's worth double checking.
 ;In any case it shouldn't spend gems even if it does click as Loop3 is looking for red, not blue.
 ;Get to < 50 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
-Battle_Orange := [1778,721,0xE26B20]
+Battle_Orange := [1745,717,0xE26C20]
 
 ;The position of the "Back" button when you've run out of stamina.
 ;Get to < 50 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
-Battle_Back := [1605,879,0x1B33AD]
+Back_Blue := [1599,893,0x081E7B]
 
 ;A White pixel on the "Skip" button text at the end of the battle.
 ;Unlike the Apoc farming scripts this only checks for a single pixel and triggers once it sees it.
 ;Please set your farming team to not use any abilities, only use the AOE attack Record Materia.
-Skip_White := [1834,922,0xFFFFFF]
+Skip_White := [1782,913,0xFFFFFF]
 
 ;A White pixel in the "Next" button text.
-Next_White := [1587,918,0xFFFFFF]
+Next_White := [1530,905,0xFFFFFF]
 
 ;Crash Handling
 ;This will enable the macro to recover for when (yes, when) FFRK crashes.
@@ -58,24 +58,25 @@ Next_White := [1587,918,0xFFFFFF]
 Enable_Crash_Handle := 1
 
 ;A pixel on the tab that brings up the home screen (not the X, since there is no X you can't close this tab)
-Crash_Home_Tab_Pixel := [1384,18,0x1D212B]
+Crash_Home_Tab_Pixel := [1459,15,0xF2FBFB]
 
 ;A pixel on the X that closes the current tab (this is for the infinite black loading screen crash).
-Crash_Close_Pixel := [1573,18,0x1282B8]
+Crash_Close_Pixel := [1497,6,0xFFFFFF]
 
-;The position of the FFRK launcher icon.
+;The position of the FFRK launcher icon. For best results, select a WHITE pixel somewhat centered.
 ;Please note that when you close an app on MeMu it will go to the default launcher, not Nova Launcher
 ;As such please use the position of the app on the default launcher.
-Crash_App_Launch := [1817,160,0xFFFFFF]
+;Searches a 50x50 box on the specified pixel.
+Crash_App_Launch := [1797,324,0xFFFFFF]
 
-;The position and colour of the blue "Play" button when FFRK launches.
-Crash_Play := [1639,766,0x0D2ECC]
+;A BLUE pixel on the blue "Play" button when FFRK launches.
+Crash_Play_Blue := [1565,734,0x2C98F6]
 
 ;The position and colour of the blue "OK" button when resuming an interrupted fight (This is for the battle load crash).
-Crash_OK := [1651,723,0x133CD2]
+Crash_OK := [1647,681,0x1749DC]
 
 ;The position and colour of the center of the bottom edge of the scroll that says "Realm Dungeons".
-Crash_In_Battle := [1433,564,0x7B5D2B]
+Crash_In_Battle := [1396,551,0xE9BA4C]
 
 
 ;******************************************************************;
@@ -91,6 +92,7 @@ loop{
 		break Loop1
 		}
 		PixelSearch, XX, YY, Yellow_Swords[1]-1, Yellow_Swords[2]-1, Yellow_Swords[1]+1, Yellow_Swords[2]+1, Yellow_Swords[3], 1, Fast RGB
+		
 		if (XX != ""){
 		sleep Click_Timeout
 		BlockInput, MouseMove
@@ -190,11 +192,14 @@ MouseClick, Left, Crash_Home_Tab_Pixel[1], Crash_Home_Tab_Pixel[2], 1, 0
 sleep 600
 MouseClick, Left, Crash_Close_Pixel[1], Crash_Close_Pixel[2], 1, 0
 sleep 600
+XX := ""
 start1 := A_TickCount
 LoopC1:
 Loop{
 	now1 := A_TickCount-start1
 	PixelSearch, XX, YY, Crash_App_Launch[1]-25, Crash_App_Launch[2]-25, Crash_App_Launch[1]+25, Crash_App_Launch[2]+25, 0xFFFFFF, 5, Fast RGB
+	
+	;msgbox, Start %start2% Now %now2% TickCount %A_TickCount% XX %XX%
 	if (XX != ""){
 	sleep Click_Timeout
 	BlockInput, MouseMove
@@ -208,31 +213,37 @@ Loop{
 if(now1 > Menu_Timeout*1000){
 goto CrashHandle
 }
-start2 := A_TickCount 
+
+
+
+start2 := A_TickCount
+
 LoopC2:
 Loop{
 	now2 := A_TickCount-start2
-	PixelSearch, XX, YY, Crash_Play[1]-2, Crash_Play[2]-2, Crash_Play[1]+2, Crash_Play[2]+2, Crash_Play[3], 2, Fast RGB
+	PixelSearch, XX, YY, Crash_Play_Blue[1]-2, Crash_Play_Blue[2]-2, Crash_Play_Blue[1]+2, Crash_Play_Blue[2]+2, Crash_Play_Blue[3], 2, Fast RGB
+	
+	;msgbox, 2 Start %start2% Now %now2% TickCount %A_TickCount% XX %XX%
 	if (XX != ""){
 	sleep Click_Timeout
 	BlockInput, MouseMove
 	sleep 100
-	MouseClick, Left, Crash_Play[1], Crash_Play[2], 1, 0
+	MouseClick, Left, Crash_Play_Blue[1], Crash_Play_Blue[2], 1, 0
 	sleep 100
 	BlockInput, MouseMoveOff
 	break LoopC2
 		}
 	} until now2 > Menu_Timeout*1000
-if(now2 > Menu_Timeout*1000){
-goto CrashHandle
-}
 resumed := 0
 
 start3 := A_TickCount
+
 LoopC3:
 Loop{
 	now3 := A_TickCount-start3
 	PixelSearch, XX, YY, Crash_OK[1]-2, Crash_OK[2]-2, Crash_OK[1]+2, Crash_OK[2]+2, Crash_OK[3], 2, Fast RGB
+	
+	;msgbox, 3 Start %start2% Now %now2% TickCount %A_TickCount% XX %XX%
 	if (XX != ""){
 	sleep Click_Timeout
 	BlockInput, MouseMove
@@ -253,6 +264,7 @@ Loop{
 	}
 	now4 := A_TickCount-start4
 	PixelSearch, XX, YY, Crash_In_Battle[1]-2, Crash_In_Battle[2]-2, Crash_In_Battle[1]+2, Crash_In_Battle[2]+2, Crash_In_Battle[3], 6, Fast RGB
+	;msgbox, 4 Start %start2% Now %now2% TickCount %A_TickCount% XX %XX%
 	if (XX != ""){
 	sleep Click_Timeout
 	BlockInput, MouseMove

@@ -28,7 +28,8 @@ Click_Timeout := 450
 Skip_Sensitivity := 3
 
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
-Apocalypse_Purple := [1806,480,0x41012F]
+;Apocalypse_Purple := [1806,480,0x41012F]
+Apocalypse_Purple := [1799,375,0x250412]
 
 ;A YELLOW pixel in the center of the screen that can sometimes be covered up by the grey "Loading" dialog. This is to prevent misclicks of the Enter Dungeon button when it is not active.
 Enter_Dungeon_Yellow := [1557,582,0xCAA978]
@@ -59,7 +60,7 @@ One_Yellow := [1526,516,0xFFDD8E]
 ;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1723,655,0x2391F5]
+Battle_Blue := [1760,689,0x1841DA]
 
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
@@ -108,7 +109,7 @@ Crash_Close_Pixel := [1497,6,0xFFFFFF]
 Crash_App_Launch := [1797,324,0xFFFFFF]
 
 ;A BLUE pixel on the blue "Play" button when FFRK launches.
-Crash_Play_Blue := [1600,761,0x0D2ECC]
+Crash_Play_Blue := [1603,755,0x0E31D0]
 
 ;A BROWN pixel on the "Cancel" button when resuming an interrupted fight (This is for the battle load crash).
 Crash_Cancel_Brown := [1340,686,0x431D10]
@@ -166,7 +167,7 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 			return 0
 		}
 		if(look_for_orange==1){
-			pixelSearch, XX, YY, battle_orange1-1, battle_orange2-1, battle_orange1+1, battle_orange2+1, battle_orange3, 5, Fast RGB
+			pixelSearch, XX, YY, battle_orange1-1, battle_orange2-1, battle_orange1+1, battle_orange2+1, battle_orange3, 10, Fast RGB
 			if(XX != ""){
 				sleep click_timeout
 				BlockInput, MouseMove
@@ -184,9 +185,14 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 	}
 }
 
+
 ;Menu clickings
 Main_Loop:
 loop{
+
+Click 2293, 105 
+Click 2290, 103 
+Click 2296, 109 
 	if(MenuPixelFinder(Apocalypse_Purple[1],Apocalypse_Purple[2],Apocalypse_Purple[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1) {
 		if(Enable_Primitive_Event_Update_Handling == 1 && possible_new_event < 10){
 			possible_new_event++
@@ -480,7 +486,7 @@ if(possible_new_event > 4){
 if (Crash_Farm_Dungeons_Selection > 4) {
 Crash_Farm_Dungeons_Selection := 1
 }
-		
+
 if(Crash_Farm_Dungeons_Selection) == 2 {
 	crash_farm_selected := Crash_Farm_Dungeon_2
 } else if(Crash_Farm_Dungeons_Selection) == 3 {
