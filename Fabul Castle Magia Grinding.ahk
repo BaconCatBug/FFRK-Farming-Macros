@@ -36,11 +36,11 @@ Battle_Blue := [1751,653,0x2052E9]
 ;The macro should work without you changing the colour thanks to variation matching but it's worth double checking.
 ;In any case it shouldn't spend gems even if it does click as Loop3 is looking for red, not blue.
 ;Get to < 50 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
-Battle_Orange := [1745,717,0xE26C20]
+Battle_Orange := [1744,715,0xE26E1E]
 
 ;The position of the "Back" button when you've run out of stamina.
 ;Get to < 50 Stamina and trigger the stamina refresh dialogue on a 5* Mote stamina fight if needs be.
-Back_Blue := [1599,893,0x081E7B]
+Back_Blue := [1557,864,0x2538C0]
 
 ;A White pixel on the "Skip" button text at the end of the battle.
 ;Unlike the Apoc farming scripts this only checks for a single pixel and triggers once it sees it.
@@ -117,9 +117,10 @@ loop{
 		}
 		;tooltip, 2
 		PixelSearch, ZZ, YY, Battle_Orange[1]-1, Battle_Orange[2]-1, Battle_Orange[1]+1, Battle_Orange[2]+1, Battle_Orange[3], 5, Fast RGB
+		msgbox, %ZZ%
 		if (ZZ != ""){
 		sleep 1000
-		MouseClick, Left, Battle_Back[1], Battle_Back[2], 1, 0
+		MouseClick, Left, Back_Blue[1], Back_Blue[2], 1, 0
 		Sleep 180000
 		Reload
 		}
