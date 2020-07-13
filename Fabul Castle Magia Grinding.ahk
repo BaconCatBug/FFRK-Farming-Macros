@@ -117,7 +117,6 @@ loop{
 		}
 		;tooltip, 2
 		PixelSearch, ZZ, YY, Battle_Orange[1]-1, Battle_Orange[2]-1, Battle_Orange[1]+1, Battle_Orange[2]+1, Battle_Orange[3], 5, Fast RGB
-		msgbox, %ZZ%
 		if (ZZ != ""){
 		sleep 1000
 		MouseClick, Left, Back_Blue[1], Back_Blue[2], 1, 0
