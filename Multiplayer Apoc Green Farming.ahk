@@ -28,8 +28,7 @@ Click_Timeout := 450
 Skip_Sensitivity := 3
 
 ;A PURPLE pixel on the top right corner of the "(Apocalypse +)" dungeon button.
-;Apocalypse_Purple := [1806,480,0x41012F]
-Apocalypse_Purple := [1799,375,0x250412]
+Apocalypse_Purple := [1806,480,0x41012F]
 
 ;A YELLOW pixel in the center of the screen that can sometimes be covered up by the grey "Loading" dialog. This is to prevent misclicks of the Enter Dungeon button when it is not active.
 Enter_Dungeon_Yellow := [1557,582,0xCAA978]
@@ -60,7 +59,7 @@ One_Yellow := [1526,516,0xFFDD8E]
 ;A BLUE pixel directly above the first "t" in "Begin Battle".
 ;Make sure it's closer to the top of the button than the top of the "t" so the orange search below works.
 ;If it stalls on the orange button set the pixel a little higher.
-Battle_Blue := [1760,689,0x1841DA]
+Battle_Blue := [1711,656,0x1E96F7]
 
 ;The a nearby (preferably the same) pixel but the ORANGE of the spend gems dialogue, allow retries when out of stamina.
 ;In any case it shouldn't spend gems even if it does click as Loop_BattleEnd is looking for white, not blue.
@@ -189,10 +188,6 @@ MenuPixelFinder(posX,posY,colour_value,crash_handle,menu_timeout,click_timeout,b
 ;Menu clickings
 Main_Loop:
 loop{
-
-Click 2293, 105 
-Click 2290, 103 
-Click 2296, 109 
 	if(MenuPixelFinder(Apocalypse_Purple[1],Apocalypse_Purple[2],Apocalypse_Purple[3],Enable_Crash_Handle,Menu_Timeout,Click_Timeout,Battle_Timeout,resumed,battle_crash) == 1 && Enable_Crash_Handle == 1) {
 		if(Enable_Primitive_Event_Update_Handling == 1 && possible_new_event < 10){
 			possible_new_event++
